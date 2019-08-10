@@ -654,6 +654,7 @@
           grid-gap: 1rem;
           grid-template-columns: 1fr 1fr 1fr;
           grid-template-rows: 1fr minmax(188px, 576px) 1fr;
+          padding: 0 1rem;
         }
 
         .servicesCard {
@@ -667,12 +668,22 @@
           padding-bottom: 1rem;
         }
 
+        .servicesCard > p:nth-child(1) {
+          padding: 17px;
+          padding-right: 2rem;
+        }
+
         .servicesCard > p:nth-child(2) {
           margin-right: -29rem;
           transform-origin: left top;
-          margin-top: 12px;
+          margin-top: 21px;
           transform: rotate(90deg);
           margin-left: 13px;
+          font-size: 25px;
+        }
+
+        .servicesCardbtnarea > p {
+          font-size: 21px;
         }
       }
 
@@ -696,6 +707,7 @@
           grid-gap: 0rem;
           grid-template-columns: minmax(160px, 380px) minmax(160px, 380px);
           grid-template-rows: 1fr minmax(188px, 576px) minmax(188px, 576px);
+          padding: 0;
         }
 
         #services > div:nth-child(1) {
