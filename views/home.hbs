@@ -649,6 +649,148 @@
 
       }
 
+      @media (max-width: 1024px) {
+        #services {
+          grid-gap: 1rem;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-rows: 1fr minmax(188px, 576px) 1fr;
+        }
+
+        .servicesCard {
+          grid-template-columns: auto 21px;
+        }
+
+        .servicesCard > div {
+          margin-top: 0;
+          align-self: end;
+          padding-right: 1rem;
+          padding-bottom: 1rem;
+        }
+
+        .servicesCard > p:nth-child(2) {
+          margin-right: -29rem;
+          transform-origin: left top;
+          margin-top: 12px;
+          transform: rotate(90deg);
+          margin-left: 13px;
+        }
+      }
+
+      @media (max-width: 700px) {
+
+        .section-heading > p {
+          font-family: Montserrat;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 18px;
+          line-height: 22px;
+        }
+
+        .section-heading hr {
+          /* Gray 1 */
+          border: 1px solid #333333;
+
+        }
+
+        #services {
+          grid-gap: 0rem;
+          grid-template-columns: minmax(160px, 380px) minmax(160px, 380px);
+          grid-template-rows: 1fr minmax(188px, 576px) minmax(188px, 576px);
+        }
+
+        #services > div:nth-child(1) {
+          padding: 1rem;
+        }
+
+        #services > div:nth-child(4) {
+          grid-column: 1/-1;
+          grid-row: 3/4;
+        }
+
+        #services > div:nth-child(4) > p:nth-child(1) {
+          padding-left: 52vw;
+        }
+
+        #services > div:nth-child(5) {
+          position: absolute;
+          bottom: 9px;
+          left: 1rem;
+          width: 45vw;
+          text-align: left;
+
+          font-family: Montserrat;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 12px;
+          line-height: 170.4%;
+          color: #828282;
+
+          padding-bottom: 0px;
+
+        }
+
+        .servicesCard {
+          grid-template-columns: auto 21px;
+        }
+
+        .servicesCard > p:nth-child(1) {
+          font-family: Montserrat;
+          font-style: normal;
+          font-weight: 300;
+          font-size: 12px;
+          line-height: 170.4%;
+          padding: 9px;
+          margin-right: 3rem;
+        }
+
+        .servicesCard > p:nth-child(2) {
+          font-family: Montserrat;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 17px;
+          line-height: 21px;
+
+          margin-right: -12rem;
+          transform-origin: left top;
+          margin-top: 12px;
+          transform: rotate(90deg);
+          margin-left: 13px;
+        }
+
+        .servicesCard > div {
+          margin-top: 0;
+          padding-right: 0;
+          align-self: end;
+          padding-bottom: 12px;
+          padding-right: 13px;
+        }
+
+        .servicesCardbtnarea > p {
+          font-family: Montserrat;
+          font-style: normal;
+          font-weight: 300;
+          font-size: 15px;
+          line-height: 18px;
+
+          margin-bottom: 8px;
+        }
+
+        .servicesCardbtnarea > button {
+          font-family: Montserrat;
+          font-style: normal;
+          font-weight: 300;
+          font-size: 15px;
+          line-height: 170.4%;
+
+        }
+
+        @media (max-height: 600px) {
+          .servicesCard > p:nth-child(2) {
+            margin-right: -5rem;
+        }
+
+      }
+
     </style>
 
     <section id="services">
@@ -657,7 +799,7 @@
         <hr width="10px">
       </div>
       <div class="servicesCard">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed d Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed d.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed d Lorem ipsum cing elit, sed d.</p>
         <p>Emotional Freedom Therapy</p>
         <div class="servicesCardbtnarea">
           <p>78 NOK / Session</p>
@@ -666,7 +808,7 @@
       </div>
 
       <div class="servicesCard">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitmet, c ipsum dolor sit amet, consectetur adipiscing elit, sed d.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitmet, c ipsum ing elit, sed d.</p>
         <p>Distance Healing Therapy</p>
         <div class="servicesCardbtnarea">
           <p>738 NOK / Session</p>
@@ -675,7 +817,7 @@
       </div>
 
       <div class="servicesCard">
-        <p>Lorem ipsum dolor sit a elit, sed d Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed d.</p>
+        <p>Lorem ipsum dolor sit a elit, sed d Lorem ipsum dolor sit amett, sed d.</p>
         <p>Neuro Lingustic Programming</p>
         <div class="servicesCardbtnarea">
           <p>18 NOK / Week</p>
