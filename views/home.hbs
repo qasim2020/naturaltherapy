@@ -111,13 +111,13 @@
       margin: 1rem 0;
     }
 
-    #landing-page > div:nth-child(3) {
-      grid-column: 1/2;
-      grid-row: 2/3;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .sliders {
       padding-left: 2rem;
+      position: fixed;
+      top: 50%;
+      left: 0%;
+      transform: translate(0, -50%);
+      z-index: 200;
     }
 
     .sliders > svg {
@@ -312,7 +312,7 @@
           line-height: 146.4%;
       }
 
-      #landing-page > div:nth-child(3) {
+      .sliders {
         padding-left: 1rem;
       }
 
@@ -376,7 +376,30 @@
     </style>
   </head>
   <body>
-    <section id="landing-page" class="">
+    <div class="sliders d-flex flex-col">
+
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="5" cy="5" r="5" fill="#C4C4C4"/>
+      </svg>
+
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="5" cy="5" r="4.5" stroke="#E0E0E0"/>
+      </svg>
+
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="5" cy="5" r="4.5" stroke="#E0E0E0"/>
+      </svg>
+
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="5" cy="5" r="4.5" stroke="#E0E0E0"/>
+      </svg>
+
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="5" cy="5" r="4.5" stroke="#E0E0E0"/>
+      </svg>
+    </div>
+
+    <section id="landing-page" class="d-none">
       <div class="logo">Natural Therapy</div>
       <!-- <div class=""> -->
         <div class="cta d-flex flex-col">
@@ -387,24 +410,6 @@
           <p>Click here</p>
         </div>
       <!-- </div> -->
-      <div class="sliders d-flex flex-col">
-
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="5" cy="5" r="5" fill="#C4C4C4"/>
-        </svg>
-
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="5" cy="5" r="4.5" stroke="#E0E0E0"/>
-        </svg>
-
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="5" cy="5" r="4.5" stroke="#E0E0E0"/>
-        </svg>
-
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="5" cy="5" r="4.5" stroke="#E0E0E0"/>
-        </svg>
-      </div>
       <div class="welcome-text">
         <p class="welcome">Welcome to</p>
         <p class="nlp">NLP !</p>
@@ -806,7 +811,7 @@
 
     </style>
 
-    <section id="services">
+    <section id="services" class="d-none">
       <div class="section-heading">
         <p>Services</p>
         <hr width="10px">
@@ -839,6 +844,133 @@
       </div>
       <div class="">
         <p>Costs listed are inclusive of all taxes</p>
+      </div>
+    </section>
+
+    <style media="screen">
+
+      #aboutme {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        grid-template-rows: 1fr;
+        height: 100vh;
+        width: 100vw;
+        background: #F2F2F2;
+      }
+
+      #aboutme > div:nth-child(1) {
+        grid-column: 1/2;
+        grid-row: 1/2;
+        background: url(/aboutmebg.png) center center no-repeat;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        overflow: hidden;
+        box-shadow: 0px 0px 86px rgba(0, 0, 0, 0.546);
+      }
+
+      #aboutme > div:nth-child(2) {
+        grid-column: 2/3;
+        grid-row: 1/2;
+        align-self: center;
+        /* Rectangle 4 */
+        padding: 0 2rem;
+        max-width: 538px;
+        margin: auto;
+
+        color: #4F4F4F;
+      }
+
+      .aboutmetext {
+
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 18px;
+        line-height: 37px;
+
+        /* Gray 2 */
+        text-align: center;
+      }
+
+      .aboutmeheading hr {
+        margin: 1rem auto;
+        border: 1px solid #333333;
+        width: 43px;
+      }
+
+      .aboutmeheading p {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 22px;
+        line-height: 39px;
+        /* identical to box height */
+        text-align: center;
+
+        /* Gray 2 */
+        font-size: 22px;
+      }
+
+      @media (max-width: 768px) {
+
+        #aboutme {
+          grid-template-columns: 1fr;
+          background: url(/aboutmebgmobile.png) center center no-repeat;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+          overflow: hidden;
+          box-shadow: 0px 0px 86px rgba(0, 0, 0, 0.546);
+        }
+
+        #aboutme > div:nth-child(1) {
+          display: none;
+
+        }
+
+        #aboutme > div:nth-child(2) {
+          color: #F2F2F2;
+          z-index: 100;
+          margin: 2rem auto;
+          padding: 0 3rem;
+          align-self: auto;
+          grid-column: 1/-1;
+        }
+
+        .aboutmeheading p {
+          /* Gray 2 */
+          font-size: 18px;
+        }
+
+        .aboutmeheading hr {
+          /* Gray 2 */
+          border: 1px solid #F2F2F2;
+        }
+
+        .aboutmetext {
+
+          font-family: Montserrat;
+          font-style: normal;
+          font-weight: 300;
+          font-size: 15px;
+          line-height: 211.9%;
+
+        }
+
+      }
+    </style>
+
+    <section id="aboutme">
+      <div class=""></div>
+      <div class="">
+        <div class="aboutmeheading">
+          <p>About Me</p>
+          <hr>
+        </div>
+        <p class="aboutmetext">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       </div>
     </section>
 
