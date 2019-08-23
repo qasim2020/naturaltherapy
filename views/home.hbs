@@ -1269,12 +1269,15 @@
 
       .subarea > *:nth-child(3) {
         /* Gray 5 */
-        background: #E0E0E0;
+        background: white;
         /* shadow-card */
         box-shadow: 0px 0px 86px rgba(0, 0, 0, 0.546);
+        -webkit-box-shadow: 0px 0px 86px rgba(0, 0, 0, 0.546);
+        -moz-box-shadow: 0px 0px 86px rgba(0, 0, 0, 0.546);
         min-width: 521px;
         min-height: 44px;
-        border: 0px;
+        border: none;
+        border-radius: 0px;
         text-align: center;
 
         font-family: Montserrat;
@@ -1308,6 +1311,9 @@
 
         /* Gray 3 */
         box-shadow: 0px 0px 86px rgba(0, 0, 0, 0.546);
+        -webkit-box-shadow: 0px 0px 86px rgba(0, 0, 0, 0.546);
+        -moz-box-shadow: 0px 0px 86px rgba(0, 0, 0, 0.546);
+        border: none;
         background: #E0E0E0;
         padding: 0 2rem;
       }
@@ -1359,6 +1365,82 @@
         bottom: 1px;
         left: 50%;
         transform: translate(-50%,0%);
+      }
+
+      @media (max-width: 768px) {
+        #footer {
+          background: url(/subbgmob.svg) center center fixed no-repeat;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+        }
+
+        .subarea > *:nth-child(1) {
+          font-size: 15px;
+        }
+
+        .subarea > *:nth-child(2) {
+          font-size: 15px;
+        }
+
+        .subarea > *:nth-child(3) {
+          min-width: 90vw;
+          font-size: 15px;
+        }
+
+        #footer input::placeholder {
+          font-size: 15px;
+        }
+
+        .subarea > *:nth-child(4) {
+          font-size: 15px;
+        }
+
+        #footer > .darkfooter {
+          height: 292px;
+          background: url(/footerbg.svg);
+          background-repeat: no-repeat;
+          /* background: url(/footerbg.svg) center center fixed no-repeat; */
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+
+          flex-direction: column;
+          justify-content: center;
+          align-items: start;
+        }
+
+        .darkfooter > .icons {
+          order: 2;
+        }
+
+        .darkfooter > ul {
+          flex-direction: column;
+          order: 1;
+          margin-bottom: 10px;
+        }
+
+        .darkfooter li {
+          padding: 0;
+          margin: 7px 0;
+        }
+
+        .darkfooter li:hover {
+
+        }
+
+        #footer .logo {
+          white-space: nowrap;
+          right: 0;
+          transform: translate(-9px, -17px);
+          text-align: right;
+        }
+
+        #footer hr {
+          border: 1px solid #333333;
+        }
       }
     </style>
 
