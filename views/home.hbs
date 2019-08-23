@@ -1144,6 +1144,7 @@
           grid-template-rows: 0.6fr 1.4fr;
           background: #E0E0E0;
           box-shadow: 0px 0px 86px rgba(0, 0, 0, 0.546);
+          cursor: pointer;
         }
 
         .test-card > svg {
@@ -1178,17 +1179,18 @@
           height: 100vh;
           opacity: 0.9;
           z-index: 5;
+          cursor: pointer;
         }
 
         #testimonials > .active {
           z-index: 10 !important;
-          transition: all 0.25s ease;
+          /* transition: all 0.25s ease; */
         }
       }
 
     </style>
 
-    <section id="testimonials" class="container">
+    <section id="testimonials" class="d-none">
       <div class="aboutmeheading">
         <p class="mt-3">our Happy clients</p>
         <hr>
@@ -1218,6 +1220,185 @@
       </div>
       <span class="bg-overlay"></span>
       <span class="bg-dark-overlay d-none"></span>
+    </section>
+
+    <style media="screen">
+      #footer {
+        display: flex;
+        flex-direction: column;
+        background: url(/subbg.svg) center center fixed no-repeat;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+
+      #footer > .aboutmeheading {
+        margin-top: 0px;
+      }
+
+      #footer > .subarea {
+        flex-grow: 1;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .subarea > *:nth-child(1) {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 37px;
+        /* Gray 1 */
+        color: #333333;
+      }
+
+      .subarea > *:nth-child(2) {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 18px;
+        line-height: 37px;
+
+        /* Gray 1 */
+        color: #333333;
+      }
+
+      .subarea > *:nth-child(3) {
+        /* Gray 5 */
+        background: #E0E0E0;
+        /* shadow-card */
+        box-shadow: 0px 0px 86px rgba(0, 0, 0, 0.546);
+        min-width: 521px;
+        min-height: 44px;
+        border: 0px;
+        text-align: center;
+
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 22px;
+        line-height: 37px;
+        /* Gray 3 */
+        color: #333333;
+      }
+
+      #footer input::placeholder {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 18px;
+        line-height: 37px;
+        /* Gray 3 */
+        color: #828282;
+
+      }
+
+      .subarea > *:nth-child(4) {
+        height: 45px;
+        margin-top: 1rem;
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 18px;
+        line-height: 37px;
+
+        /* Gray 3 */
+        box-shadow: 0px 0px 86px rgba(0, 0, 0, 0.546);
+        background: #E0E0E0;
+        padding: 0 2rem;
+      }
+
+      #footer > .darkfooter {
+        height: 180px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+        background: #333333;
+      }
+
+      .darkfooter > ul {
+        display: flex;
+        /* Services */
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 17px;
+
+        /* Gray 5 */
+        color: #E0E0E0;
+      }
+
+      .darkfooter li {
+        padding: 2px 8px;
+        border: 1px solid transparent;
+      }
+
+      .darkfooter li:hover {
+        color: white;
+        cursor: pointer;
+        border: 1px solid white;
+      }
+
+      #footer .logo {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 15px;
+        line-height: 18px;
+        color: #6FCF97;
+        padding: 2rem;
+
+        position: absolute;
+        bottom: 1px;
+        left: 50%;
+        transform: translate(-50%,0%);
+      }
+    </style>
+
+    <section id="footer">
+      <div class="aboutmeheading">
+        <hr>
+        <p>and Don't forget to</p>
+      </div>
+      <div class="subarea">
+        <p>subscribe</p>
+        <p>to our news letter</p>
+        <input type="text" name="" value="" placeholder="email@hotmail.com">
+        <button type="button" name="button">Subscribe</button>
+      </div>
+      <div class="darkfooter">
+
+        <div class="icons">
+          <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="17.5" cy="17.5" r="17" stroke="#C0C1C5"/>
+          <path d="M22.3447 19.1206L22.8632 15.8644H19.621V13.7514C19.621 12.8606 20.0739 11.9923 21.526 11.9923H23V9.21998C23 9.21998 21.6624 9 20.3835 9C17.7134 9 15.9681 10.5596 15.9681 13.3828V15.8644H13V19.1206H15.9681V26.9922H19.621V19.1206H22.3447Z" fill="#C0C1C5"/>
+          </svg>
+
+
+          <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="17.5" cy="17.5" r="17" stroke="#C0C1C5"/>
+          <path d="M25.1498 13.7366C25.1612 13.9005 25.1612 14.0646 25.1612 14.2285C25.1612 19.2301 21.4493 24.9932 14.665 24.9932C12.5749 24.9932 10.6333 24.3723 9 23.2947C9.29697 23.3299 9.58247 23.3416 9.89086 23.3416C11.6155 23.3416 13.2031 22.7442 14.4708 21.7251C12.849 21.69 11.4898 20.6006 11.0216 19.1013C11.25 19.1364 11.4784 19.1599 11.7183 19.1599C12.0495 19.1599 12.3807 19.113 12.6891 19.031C10.9987 18.6796 9.73094 17.1569 9.73094 15.3179V15.271C10.222 15.5522 10.7932 15.7279 11.3984 15.7513C10.4048 15.0719 9.75379 13.9123 9.75379 12.6004C9.75379 11.8976 9.9365 11.2533 10.2563 10.6911C12.0723 12.9869 14.802 14.4862 17.8629 14.6502C17.8058 14.3691 17.7716 14.0763 17.7716 13.7834C17.7716 11.6984 19.4162 10 21.4607 10C22.5228 10 23.4822 10.4568 24.1561 11.1948C24.9898 11.0308 25.7893 10.7145 26.4975 10.2811C26.2233 11.1596 25.6409 11.8976 24.8756 12.3661C25.618 12.2841 26.3376 12.0733 27 11.7805C26.4975 12.5301 25.8693 13.1977 25.1498 13.7366Z" fill="#C0C1C5"/>
+          </svg>
+        </div>
+
+        <ul>
+          <li>Home</li>
+          <li>Services</li>
+          <li>About Me</li>
+          <li>our Happy clients</li>
+          <li>Contact</li>
+        </ul>
+
+        <p class="logo">Natural Therapy</p>
+
+      </div>
     </section>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
@@ -1257,9 +1438,9 @@
 
     $(document).on('click','.test-card',function() {
       if (window.innerWidth > 1024) return;
-      $('.bg-dark-overlay').removeClass('d-none');
       string = $(this).find('p').attr('original');
       $(this).addClass('active').find('p').html(string);
+      $('.bg-dark-overlay').removeClass('d-none');
     })
 
     $(document).on('click','.bg-dark-overlay',function() {
