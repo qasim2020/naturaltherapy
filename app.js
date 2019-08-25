@@ -11,6 +11,7 @@ const _ = require('lodash');
 const axios = require('axios');
 
 const {serverRunning} = require('./js/serverRunning');
+const {sheet} = require('./server/sheets.js');
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -29,6 +30,52 @@ app.set('view engine','hbs');
 hbs.registerHelper("inc", function(value, options) {
     return parseInt(value) + 1;
 });
+
+app.get('/publish',(req,res) => {
+  let myobject = {};
+  sheet('naturaltherapy','read').then(msg => {
+    // console.log(msg[0].values);
+    let en = msg[0].values;
+    myobject = {
+      landingpage: {
+        logo: en[2][1],
+        booking: {
+          line1: en[3][1],
+          line2: en[3][2],
+          line3: en[3][3]
+        },
+        welcome: {
+          line1: en[4][1],
+          line2: en[4][2],
+          line3: en[4][3]
+        },
+        photocredits: en[5][1]
+      },
+      servicespage: {
+        heading: en[8][1],
+        service1: {
+          line1: en[9][1],
+          line2: en[9][2],
+          line3: en[9][3]
+        },
+        service2: {
+          line1: en[10][1],
+          line2: en[10][2],
+          line3: en[10][3]
+        },
+        service3: {
+          line1: en[11][1],
+          line2: en[11][2],
+          line3: en[11][3]
+        },
+      }
+    };
+    console.log(myobject);
+    res.render('home.hbs',{myobject});
+  }).catch(e => {
+    res.status(404).send(e);
+  });
+})
 
 app.get('/',(req,res) => {
   res.render('home.hbs');
