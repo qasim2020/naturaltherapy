@@ -31,72 +31,29 @@ hbs.registerHelper("inc", function(value, options) {
     return parseInt(value) + 1;
 });
 
-sheet('naturaltherapy','read').then(msg => {
-  // console.log(msg[0].values);
-  let myobject = {}, part = '';
-  let en = msg[0].values;
-
+let convertGoogleData = function(data) {
+  let part = '', poppedItem = '', nobject = {};
+  let en = data;
   _.each(en,(v,i) => {
-    if (!v) {
-      return part = v[i+1];
+    if (!v[0] || i == 0) {
+      part = en[i+1][0].replace(' ','');
+      nobject[part] = {};
+      return;
     }
-    myobject[part][v[0]] = v.shift();
+    poppedItem = v.shift();
+    if (!v[0]) return;
+    nobject[part][poppedItem] = v;
   })
-  console.log(myobject);
-}).catch(e => console.log(e));
+  return nobject;
+}
 
 app.get('/publish',(req,res) => {
-
   sheet('naturaltherapy','read').then(msg => {
-    // console.log(msg[0].values);
-    let en = msg[0].values;
-
-    _.each(en,(v,i) => {
-      if (!v) {
-        part = v[i+1];
-      }
-      myobject[part][v[0]] = v.shift();
-    })
-
-    // myobject = {
-    //   landingpage: {
-    //     logo: en[2][1],
-    //     booking: {
-    //       line1: en[3][1],
-    //       line2: en[3][2],
-    //       line3: en[3][3]
-    //     },
-    //     welcome: {
-    //       line1: en[4][1],
-    //       line2: en[4][2],
-    //       line3: en[4][3]
-    //     },
-    //     photocredits: en[5][1]
-    //   },
-    //   servicespage: {
-    //     heading: en[8][1],
-    //     service1: {
-    //       line1: en[9][1],
-    //       line2: en[9][2],
-    //       line3: en[9][3]
-    //     },
-    //     service2: {
-    //       line1: en[10][1],
-    //       line2: en[10][2],
-    //       line3: en[10][3]
-    //     },
-    //     service3: {
-    //       line1: en[11][1],
-    //       line2: en[11][2],
-    //       line3: en[11][3]
-    //     },
-    //   }
-    // };
-    console.log(myobject);
-    res.render('home.hbs',{myobject});
-  }).catch(e => {
-    res.status(404).send(e);
-  });
+      let data = convertGoogleData(msg[0].values);
+      // console.log(JSON.stringify(data, 0, 2));
+      // console.log(data.LandingPage.Logo[0]);
+      res.status(200).render('home.hbs',data);
+  }).catch(e => console.log(e));
 })
 
 app.get('/',(req,res) => {
