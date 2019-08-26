@@ -31,45 +31,67 @@ hbs.registerHelper("inc", function(value, options) {
     return parseInt(value) + 1;
 });
 
+sheet('naturaltherapy','read').then(msg => {
+  // console.log(msg[0].values);
+  let myobject = {}, part = '';
+  let en = msg[0].values;
+
+  _.each(en,(v,i) => {
+    if (!v) {
+      return part = v[i+1];
+    }
+    myobject[part][v[0]] = v.shift();
+  })
+  console.log(myobject);
+}).catch(e => console.log(e));
+
 app.get('/publish',(req,res) => {
-  let myobject = {};
+
   sheet('naturaltherapy','read').then(msg => {
     // console.log(msg[0].values);
     let en = msg[0].values;
-    myobject = {
-      landingpage: {
-        logo: en[2][1],
-        booking: {
-          line1: en[3][1],
-          line2: en[3][2],
-          line3: en[3][3]
-        },
-        welcome: {
-          line1: en[4][1],
-          line2: en[4][2],
-          line3: en[4][3]
-        },
-        photocredits: en[5][1]
-      },
-      servicespage: {
-        heading: en[8][1],
-        service1: {
-          line1: en[9][1],
-          line2: en[9][2],
-          line3: en[9][3]
-        },
-        service2: {
-          line1: en[10][1],
-          line2: en[10][2],
-          line3: en[10][3]
-        },
-        service3: {
-          line1: en[11][1],
-          line2: en[11][2],
-          line3: en[11][3]
-        },
+
+    _.each(en,(v,i) => {
+      if (!v) {
+        part = v[i+1];
       }
-    };
+      myobject[part][v[0]] = v.shift();
+    })
+
+    // myobject = {
+    //   landingpage: {
+    //     logo: en[2][1],
+    //     booking: {
+    //       line1: en[3][1],
+    //       line2: en[3][2],
+    //       line3: en[3][3]
+    //     },
+    //     welcome: {
+    //       line1: en[4][1],
+    //       line2: en[4][2],
+    //       line3: en[4][3]
+    //     },
+    //     photocredits: en[5][1]
+    //   },
+    //   servicespage: {
+    //     heading: en[8][1],
+    //     service1: {
+    //       line1: en[9][1],
+    //       line2: en[9][2],
+    //       line3: en[9][3]
+    //     },
+    //     service2: {
+    //       line1: en[10][1],
+    //       line2: en[10][2],
+    //       line3: en[10][3]
+    //     },
+    //     service3: {
+    //       line1: en[11][1],
+    //       line2: en[11][2],
+    //       line3: en[11][3]
+    //     },
+    //   }
+    // };
     console.log(myobject);
     res.render('home.hbs',{myobject});
   }).catch(e => {
