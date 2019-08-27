@@ -11,6 +11,7 @@ const _ = require('lodash');
 const axios = require('axios');
 
 const {serverRunning} = require('./js/serverRunning');
+const {sheet} = require('./server/sheets.js');
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -29,6 +30,31 @@ app.set('view engine','hbs');
 hbs.registerHelper("inc", function(value, options) {
     return parseInt(value) + 1;
 });
+
+let convertGoogleData = function(data) {
+  let part = '', poppedItem = '', nobject = {};
+  let en = data;
+  _.each(en,(v,i) => {
+    if (!v[0] || i == 0) {
+      part = en[i+1][0].replace(' ','');
+      nobject[part] = {};
+      return;
+    }
+    poppedItem = v.shift();
+    if (!v[0]) return;
+    nobject[part][poppedItem] = v;
+  })
+  return nobject;
+}
+
+app.get('/publish',(req,res) => {
+  sheet('naturaltherapy','read').then(msg => {
+      let data = convertGoogleData(msg[0].values);
+      // console.log(JSON.stringify(data, 0, 2));
+      // console.log(data.LandingPage.Logo[0]);
+      res.status(200).render('home.hbs',data);
+  }).catch(e => console.log(e));
+})
 
 app.get('/',(req,res) => {
   res.render('home.hbs');
