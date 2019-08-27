@@ -229,6 +229,11 @@
 
     }
 
+    .menu-items a {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .menu-items > li:hover {
       color: white;
       cursor: pointer;
@@ -405,18 +410,18 @@
       <div class="logo">{{LandingPage.Logo}}</div>
       <!-- <div class=""> -->
         <div class="cta d-flex flex-col">
-          <p>Booking 15 mins <br> Free Session Now</p>
+          <p>{{LandingPage.Booking.[0]}} <br> {{LandingPage.Booking.[1]}}</p>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M16 8L14.59 6.59L9 12.17V0H7V12.17L1.42 6.58L0 8L8 16L16 8Z" fill="#251e1e"/>
           </svg>
-          <p>Click here</p>
+          <p>{{LandingPage.Booking.[2]}}</p>
         </div>
       <!-- </div> -->
       <div class=""></div>
       <div class="welcome-text">
-        <p class="welcome">Welcome to</p>
-        <p class="nlp">NLP !</p>
-        <small><b>a guranteed chance <br class=""> to a happier life</b></small>
+        <p class="welcome">{{LandingPage.Welcome.[0]}}</p>
+        <p class="nlp">{{LandingPage.Welcome.[1]}}</p>
+        <small><b>{{LandingPage.Welcome.[2]}} <br class=""> {{LandingPage.Welcome.[3]}}</b></small>
       </div>
       <div class="social-media-icons d-flex flex-col">
         <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -428,7 +433,7 @@
         </svg>
       </div>
       <div class="photo-credits">
-        <p>Photo by David Monje on Unsplash</p>
+        <p>{{LandingPage.PhotoCredits}}</p>
       </div>
       <div class="down-arrow">
         <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -436,10 +441,9 @@
         </svg>
       </div>
       <div class="menu-items">
-        <li class="">Services</li>
-        <li class="">About</li>
-        <li class="">Feedbacks</li>
-        <li class="">Contact</li>
+        {{#each MenuBtns}}
+        <li class=""><a href="{{this.[1]}}">{{this.[0]}}</a></li>
+        {{/each}}
         <div class="">
           <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 12H18V10H0V12ZM0 7H18V5H0V7ZM0 0V2H18V0H0Z" fill="#E0E0E0"/>
@@ -816,37 +820,40 @@
 
     <section id="services" class="">
       <div class="section-heading">
-        <p>Services</p>
+        <p>{{ServicesPage.heading.[0]}}</p>
         <hr width="10px">
       </div>
+
       <div class="servicesCard">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed d Lorem ipsum cing elit, sed d.</p>
-        <p>Emotional Freedom Therapy</p>
+        <p>{{ServicesPage.service1.[1]}}</p>
+        <p>{{ServicesPage.service1.[0]}}</p>
         <div class="servicesCardbtnarea">
-          <p>78 NOK / Session</p>
+          <p>{{ServicesPage.service1.[2]}}</p>
           <button type="button" name="button">Learn More</button>
         </div>
       </div>
 
       <div class="servicesCard">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitmet, c ipsum ing elit, sed d.</p>
-        <p>Distance Healing Therapy</p>
+        <p>{{ServicesPage.service2.[1]}}</p>
+        <p>{{ServicesPage.service2.[0]}}</p>
         <div class="servicesCardbtnarea">
-          <p>738 NOK / Session</p>
+          <p>{{ServicesPage.service2.[2]}}</p>
           <button type="button" name="button">Learn More</button>
         </div>
       </div>
 
       <div class="servicesCard">
-        <p>Lorem ipsum dolor sit a elit, sed d Lorem ipsum dolor sit amett, sed d.</p>
-        <p>Neuro Lingustic Programming</p>
+        <p>{{ServicesPage.service3.[1]}}</p>
+        <p>{{ServicesPage.service3.[0]}}</p>
         <div class="servicesCardbtnarea">
-          <p>18 NOK / Week</p>
+          <p>{{ServicesPage.service3.[2]}}</p>
           <button type="button" name="button">Learn More</button>
         </div>
       </div>
+
+
       <div class="">
-        <p>Costs listed are inclusive of all taxes</p>
+        <p>{{ServicesPage.condition.[0]}}</p>
       </div>
     </section>
 
@@ -970,10 +977,10 @@
       <div class=""></div>
       <div class="">
         <div class="aboutmeheading">
-          <p>About Me</p>
+          <p>{{AboutPage.heading.[0]}}</p>
           <hr>
         </div>
-        <p class="aboutmetext">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p class="aboutmetext">{{AboutPage.headingtext.[0]}}</p>
       </div>
     </section>
 
@@ -1193,32 +1200,20 @@
 
     <section id="testimonials" class="">
       <div class="aboutmeheading">
-        <p class="mt-3">our Happy clients</p>
+        <p class="mt-3">{{TestimonialPage.heading.[0]}}</p>
         <hr>
       </div>
-      <div class="test-card" style="transform: rotate(-1.32deg);">
+    {{#each TestimonialPage}}
+      {{#if this.[2]}}
+      <div class="test-card" style="transform: rotate({{this.[2]}});">
         <svg width="34" height="25" viewBox="0 0 34 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2.35649 24.2578L9.42604 24.4206L14.3563 15.1073L14.6821 0.974579L0.542969 0.648926L0.217169 14.7817L7.28672 14.9445L2.35649 24.2578ZM21.2086 24.692L28.2782 24.8548L33.2084 15.5415L33.5342 1.40878L19.3951 1.08313L19.0693 15.2159L26.1389 15.3787L21.2086 24.692Z" fill="#6FCF97"/>
+        <path d="M2.35649 24.2578L9.42604 24.4206L14.3563 15.1073L14.6821 0.974579L0.542969 0.648926L0.217169 14.7817L7.28672 14.9445L2.35649 24.2578ZM21.2086 24.692L28.2782 24.8548L33.2084 15.5415L33.5342 1.40878L19.3951 1.08313L19.0693 15.2159L26.1389 15.3787L21.2086 24.692Z" fill="{{this.[3]}}"/>
         </svg>
-        <h5>Zafar Norway</h5>
-        <p original="Lorem ipsum dolor sit amet, consectetur adipiscor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.">Lorem ipsum dolor sit amet, consectetur adipiscor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+        <h5>{{this.[0]}}</h5>
+        <p original="{{this.[1]}}">{{this.[1]}}</p>
       </div>
-
-      <div class="test-card" style="transform: rotate(-3.63deg)">
-        <svg width="34" height="27" viewBox="0 0 34 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3.84479 26.0617L10.902 25.6142L15.0099 15.9104L14.1145 1.80224L0 2.69727L0.895427 16.8055L7.95266 16.3579L3.84479 26.0617ZM22.6641 24.8684L29.7213 24.4209L33.8292 14.7171L32.9338 0.608866L18.8193 1.50389L19.7147 15.6121L26.772 15.1646L22.6641 24.8684Z" fill="#F2994A"/>
-        </svg>
-        <h5>Jafar Pakistan</h5>
-        <p original="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt utipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt utipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-      </div>
-
-      <div class="test-card" style="transform: rotate(1deg);">
-        <svg width="35" height="25" viewBox="0 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3.35918 24.0588L10.4306 24.0575L15.1433 14.6323L15.1408 0.49558L0.997925 0.498047L1.00039 14.6347L8.07182 14.6335L3.35918 24.0588ZM22.2163 24.0555L29.2878 24.0543L34.0004 14.629L33.9979 0.49229L19.8551 0.494757L19.8575 14.6314L26.929 14.6302L22.2163 24.0555Z" fill="#56CCF2"/>
-        </svg>
-        <h5>Hashim Canada</h5>
-        <p original="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eied do eiusmod tempor incididunt ut labore et dolore med do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eied do eiusmod tempor incididunt ut labore et dolore med do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-      </div>
+      {{/if}}
+    {{/each}}
       <span class="bg-overlay"></span>
       <span class="bg-dark-overlay d-none"></span>
     </section>
@@ -1449,13 +1444,13 @@
     <section id="footer">
       <div class="aboutmeheading">
         <hr>
-        <p>and Don't forget to</p>
+        <p>{{SubscribePage.heading.[0]}}</p>
       </div>
       <div class="subarea">
-        <p>subscribe</p>
-        <p>to our news letter</p>
+        <p>{{SubscribePage.inputheading.[0]}}</p>
+        <p>{{SubscribePage.inputheading.[1]}}</p>
         <input type="text" name="" value="" placeholder="email@hotmail.com">
-        <button type="button" name="button">Subscribe</button>
+        <button type="button" name="button">{{SubscribePage.submitbutton.[0]}}</button>
       </div>
       <div class="darkfooter">
 
@@ -1473,14 +1468,12 @@
         </div>
 
         <ul>
-          <li>Home</li>
-          <li>Services</li>
-          <li>About Me</li>
-          <li>our Happy clients</li>
-          <li>Contact</li>
+          {{#each MenuBtns}}
+          <li>{{this.[0]}}</li>
+          {{/each}}
         </ul>
 
-        <p class="logo">{{LandingPage}}</p>
+        <p class="logo">{{LandingPage.Logo.[0]}}</p>
 
       </div>
     </section>

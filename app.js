@@ -36,11 +36,11 @@ let convertGoogleData = function(data) {
   let en = data;
   _.each(en,(v,i) => {
     if (!v[0] || i == 0) {
-      part = en[i+1][0].replace(' ','');
+      part = en[i+1][0].replace(/ /g,'');
       nobject[part] = {};
       return;
     }
-    poppedItem = v.shift();
+    poppedItem = v.shift().replace(/ /g,'');
     if (!v[0]) return;
     nobject[part][poppedItem] = v;
   })
@@ -50,7 +50,7 @@ let convertGoogleData = function(data) {
 app.get('/publish',(req,res) => {
   sheet('naturaltherapy','read').then(msg => {
       let data = convertGoogleData(msg[0].values);
-      // console.log(JSON.stringify(data, 0, 2));
+      console.log(JSON.stringify(data, 0, 2));
       // console.log(data.LandingPage.Logo[0]);
       res.status(200).render('home.hbs',data);
   }).catch(e => console.log(e));
