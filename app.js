@@ -60,6 +60,10 @@ app.get('/',(req,res) => {
   res.render('home.hbs');
 })
 
+app.get('/admin',(req,res) => {
+  res.render('admin.hbs');
+})
+
 serverRunning();
 
 app.set('port', process.env.PORT || 3000);

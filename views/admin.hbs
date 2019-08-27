@@ -53,14 +53,6 @@
     }
 
     #landing-page {
-
-    }
-
-    #landing-page > div:nth-child(1) {
-
-    }
-
-    body {
       background: url(/adminbg.svg) center center fixed no-repeat;
       -webkit-background-size: cover;
       -moz-background-size: cover;
@@ -68,7 +60,127 @@
       background-size: cover;
       width: 100vw;
       height: 100vh;
+      min-height: 800px;
       background-color: #333333;
+    }
+
+    #landing-page > div:nth-child(1) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    .welcome > p:nth-child(1) {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 18px;
+      color: #6FCF97;
+      padding: 2rem;
+    }
+
+    .welcome > p:nth-child(2) {
+      margin-top: 3rem;
+      text-align: center;
+
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 22px;
+      /* Gray 5 */
+      color: #BDBDBD;
+    }
+
+    .welcome > hr {
+      margin: auto;
+      text-align: center;
+      width: 58px;
+      height: 0px;
+
+      /* Gray 5 */
+      border: 1px solid #BDBDBD;
+      margin-top: 1rem;
+
+    }
+
+    #landing-page > div:nth-child(2) {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+    }
+
+    .card {
+      width: 24%;
+      height: 202px;
+      margin: 0 3px;
+      /* Gray 2 */
+      background: #4F4F4F;
+      text-align: center;
+
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    .card > svg:nth-child(1) {
+      position: absolute;
+      left: 50%;
+      top: 0%;
+      transform: translate(-50%,-50%);
+    }
+
+    .card > p:nth-child(2) {
+      margin-top: 31px;
+
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 22px;
+      /* identical to box height */
+
+      /* Gray 4 */
+      color: #BDBDBD;
+    }
+
+    .card > p:nth-child(3) {
+      padding: 0 1rem;
+      
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 28px;
+      text-align: center;
+
+      /* Gray 4 */
+      color: #BDBDBD;
+    }
+
+    .card > button {
+      padding: 4px 8px;
+      border: 1px solid #BDBDBD;
+      /* Gray 4 */
+      background: #BDBDBD;
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 28px;
+      text-align: center;
+
+      color: #000000;
     }
 
   </style>
@@ -81,11 +193,50 @@
           <p>Welcome to admin page</p>
           <hr>
         </div>
-        <div class="cards">
-          <div class=""></div>
-          <div class=""></div>
-          <div class=""></div>
-          <div class=""></div>
+        <div class="">
+          <div class="card">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="22" fill="#6FCF97"/>
+            <path d="M23.562 15.4V28H20.646V17.74H18.126V15.4H23.562Z" fill="#4F4F4F"/>
+            </svg>
+
+            <p>Google Sheet</p>
+            <p>Make amendments to your google sheet by visiting the link below</p>
+            <button type="button" name="button">Go to your sheet</button>
+          </div>
+          <div class="card">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="22" fill="#6FCF97"/>
+            <path d="M26.116 25.624V28H16.594V26.11L21.454 21.52C21.97 21.028 22.318 20.608 22.498 20.26C22.678 19.9 22.768 19.546 22.768 19.198C22.768 18.694 22.594 18.31 22.246 18.046C21.91 17.77 21.412 17.632 20.752 17.632C20.2 17.632 19.702 17.74 19.258 17.956C18.814 18.16 18.442 18.472 18.142 18.892L16.018 17.524C16.51 16.792 17.188 16.222 18.052 15.814C18.916 15.394 19.906 15.184 21.022 15.184C21.958 15.184 22.774 15.34 23.47 15.652C24.178 15.952 24.724 16.384 25.108 16.948C25.504 17.5 25.702 18.154 25.702 18.91C25.702 19.594 25.558 20.236 25.27 20.836C24.982 21.436 24.424 22.12 23.596 22.888L20.698 25.624H26.116Z" fill="#4F4F4F"/>
+            </svg>
+
+
+            <p>Create Links</p>
+            <p>Fetch your google sheets information by clicking below</p>
+            <button type="button" name="button">Create Links</button>
+          </div>
+          <div class="card">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="22" fill="#6FCF97"/>
+            <path d="M22.588 20.53C23.692 20.71 24.538 21.124 25.126 21.772C25.714 22.408 26.008 23.2 26.008 24.148C26.008 24.88 25.816 25.558 25.432 26.182C25.048 26.794 24.46 27.286 23.668 27.658C22.888 28.03 21.928 28.216 20.788 28.216C19.9 28.216 19.024 28.102 18.16 27.874C17.308 27.634 16.582 27.298 15.982 26.866L17.116 24.634C17.596 24.994 18.148 25.276 18.772 25.48C19.408 25.672 20.056 25.768 20.716 25.768C21.448 25.768 22.024 25.63 22.444 25.354C22.864 25.066 23.074 24.664 23.074 24.148C23.074 23.116 22.288 22.6 20.716 22.6H19.384V20.674L21.976 17.74H16.612V15.4H25.432V17.29L22.588 20.53Z" fill="#4F4F4F"/>
+            </svg>
+
+
+            <p>Check Draft Website</p>
+            <p>Visit draft pages in all languages before making final deployments</p>
+            <button type="button" name="button">Draft Website</button>
+          </div>
+          <div class="card">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="22" fill="#6FCF97"/>
+            <path d="M28.24 25.354H26.188V28H23.344V25.354H16.558V23.392L22.498 15.4H25.558L20.05 22.978H23.434V20.62H26.188V22.978H28.24V25.354Z" fill="#4F4F4F"/>
+            </svg>
+
+
+            <p>Deployment</p>
+            <p>Sattisfied with your site? Go ahead and deploy by clicking below</p>
+            <button type="button" name="button">Deploy</button>
+          </div>
         </div>
       </section>
   </body>
