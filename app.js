@@ -61,7 +61,14 @@ app.get('/',(req,res) => {
 })
 
 app.get('/admin',(req,res) => {
-  res.render('admin.hbs');
+  res.render('admin.hbs',{
+    google_link: process.env.google_link,
+    token: 'asdfas'
+  });
+})
+
+app.get('/fetch_google_sheet',(req,res) => {
+  res.status(200).send('done');
 })
 
 serverRunning();

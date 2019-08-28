@@ -171,7 +171,8 @@
       color: #BDBDBD;
     }
 
-    .card > button {
+    .card > button, .card > a {
+      text-decoration: none;
       padding: 4px 8px;
       border: 1px solid #BDBDBD;
       /* Gray 4 */
@@ -224,7 +225,7 @@
 
             <p>Google Sheet</p>
             <p>Make amendments to your google sheet by visiting the link below</p>
-            <button type="button" name="button">Go to your sheet</button>
+            <a target="_blank" type="button" name="button" href="{{google_link}}">Go to your sheet</a>
           </div>
           <div class="card">
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -235,7 +236,7 @@
 
             <p>Fetch Info</p>
             <p>Fetch your google sheets information by clicking below</p>
-            <button type="button" name="button">Fetch Google Sheet</button>
+            <button type="button" name="button" id="fetch_google_sheet">Fetch Google Sheet</button>
           </div>
           <div class="card">
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -246,7 +247,7 @@
 
             <p>Create Website</p>
             <p>Visit draft pages in all languages before making final deployments</p>
-            <button type="button" name="button">Create Draft Website</button>
+            <button type="button" name="button">Visit Draft Website</button>
           </div>
           <div class="card">
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -261,5 +262,25 @@
           </div>
         </div>
       </section>
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
+      <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+      <script type="text/javascript">
+        $(document).on('click','#fetch_google_sheet',function() {
+
+          $.ajax({
+            url: '/fetch_google_sheet',
+            type: 'get',
+            token: "{{token}}",
+            headers: {
+                'content-type': 'application/json',
+            }
+          }).done((msg) => {
+            console.log(msg);
+          }).fail((e) => {
+            // $('.error').show().html(e.responseText);
+            console.log(e.responseText);
+          });
+        })
+      </script>
   </body>
 </html>
