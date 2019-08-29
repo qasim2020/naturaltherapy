@@ -31,8 +31,8 @@
               'content-type': 'application/json',
           }
         }).done((msg) => {
-          console.log(msg);
-          window.location.assign('/admin.hbs');
+          return console.log(msg);
+          window.location.assign('/admin');
         }).fail((e) => {
           // $('.error').show().html(e.responseText);
           console.log(e.responseText);

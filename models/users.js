@@ -6,6 +6,7 @@ const session = require('express-session');
 var UsersSchema = new mongoose.Schema({
   email: {
     type: String,
+    unique: true
   },
   password: {
     type: String,
