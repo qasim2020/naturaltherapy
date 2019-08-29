@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
 var SheetData = mongoose.Schema({
   en: {
@@ -10,6 +9,9 @@ var SheetData = mongoose.Schema({
   },
   nok: {
     type: Object
+  },
+  status: {
+    type: String
   }
 });
 

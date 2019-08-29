@@ -35,6 +35,26 @@ function sheet(name,type,values) {
   });
 }
 
+function readSheet(auth, value) {
+  return new Promise((resolve,reject) => {
+    const sheets = google.sheets({version: 'v4', auth});
+    var request = {
+      spreadsheetId: value.sheet,
+      ranges: ['English!1:1000','Urdu!1:1000','Norsk!1:1000'],
+      valueRenderOption: 'UNFORMATTED_VALUE',
+      dateTimeRenderOption: 'FORMATTED_STRING',
+    };
+
+    sheets.spreadsheets.values.batchGet(request, function(err, response) {
+      if (err) {
+        console.error(err);
+        return reject(err);
+      }
+      return resolve(response.data.valueRanges);
+    });
+  });
+};
+
 function todayUpdates(auth, value) {
   return new Promise((resolve,reject) => {
     const sheets = google.sheets({version: 'v4', auth});
@@ -89,26 +109,6 @@ function getNewToken(oAuth2Client, callback) {
         console.log('Token stored to', TOKEN_PATH);
       });
       callback(oAuth2Client);
-    });
-  });
-};
-
-function readSheet(auth, value) {
-  return new Promise((resolve,reject) => {
-    const sheets = google.sheets({version: 'v4', auth});
-    var request = {
-      spreadsheetId: value.sheet,
-      ranges: ['English!1:1000','Urdu!1:1000'],
-      valueRenderOption: 'UNFORMATTED_VALUE',
-      dateTimeRenderOption: 'FORMATTED_STRING',
-    };
-
-    sheets.spreadsheets.values.batchGet(request, function(err, response) {
-      if (err) {
-        console.error(err);
-        return reject(err);
-      }
-      return resolve(response.data.valueRanges);
     });
   });
 };

@@ -13,9 +13,10 @@ const axios = require('axios');
 const {serverRunning} = require('./js/serverRunning');
 const {sheet} = require('./server/sheets.js');
 const {Users} = require('./models/users');
-const {SheetData} = require('./models/users');
+const {SheetData} = require('./models/sheetData');
 const {sendmail} = require('./js/sendmail');
 const {Subscription} = require('./models/subscription');
+const {mongoose} = require('./db/mongoose');
 
 
 var app = express();
@@ -37,7 +38,7 @@ hbs.registerHelper("inc", function(value, options) {
 });
 
 let authenticate = (req,res,next) => {
-  let token = req.params.token || req.body.token || req.query.token;
+  let token = req.body.token || req.query.token;
   Users.findByToken(token).then((user) => {
     if (!user) return Promise.reject('No user found for token :', token);
     req.params.user = user;
@@ -88,9 +89,9 @@ app.get('/signup_request',(req,res) => {
     email: 'sajidaparveen@gmail.com',
     password: '12341234'
   });
-  user.save()
-  .then(msg => res.status(200).send(msg))
-  .catch(e => {
+  user.save().then(msg => {
+    res.status(200).send(msg)
+  }).catch(e => {
     console.log(e);
     res.status(404).send(e);
   });
@@ -115,47 +116,56 @@ app.post('/login_request',(req,res) => {
   });
 })
 
-app.get('/admin',(req,res) => {
+app.get('/admin', authenticate,(req,res) => {
   res.render('admin.hbs',{
     google_link: process.env.google_link,
-    token: 'asdfas'
+    token: req.params.token
   });
 })
 
-app.get('/fetch_google_sheet',(req,res) => {
-  return res.status(200).send('done');
+app.get('/fetch_google_sheet', authenticate, (req,res) => {
+
   sheet('naturaltherapy','read').then(msg => {
-      let data = convertGoogleData(msg[0].values);
-      let sheetData = new SheetData ({
+
+      let sheetData = new SheetData({
         en: convertGoogleData(msg[0].values),
         ur: convertGoogleData(msg[1].values),
-        nok: convertGoogleData(msg[2].values)
+        nok: convertGoogleData(msg[2].values),
+        status: 'pending'
       });
       return sheetData.save();
     }).then(returned => {
-      res.status(200).send('done');
-    })
+      res.status(200).send(returned._id.toString());
+    }).catch(e => {
+    console.log(e);
+    res.status(400).send(e);
+  });
+})
+
+app.get('/draft_site', authenticate, (req,res) => {
+
+  SheetData.findById(mongoose.Types.ObjectId(req.body.sheetId)).then(returned => {
+    if (!returned) return Promise.reject('Data not found ! Contact Developer !');
+    res.status(200).render('home.hbs',returned);
+  }).catch((e) => {
+    console.log(e);
+    res.status(400).render('error.hbs',e.msg);
+  });
+})
+
+app.post('/deploy_request', authenticate, async (req,res) => {
+
+  SheetData.updateMany({status: 'live'},{$set:{status: 'took_offline'}}).then(oldSheet => {
+    return SheetData.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.sheetId)},{$set: {status: 'live'}});
+  }).then(returned => {
+    if (!returned) return Promise.reject('Sheet not found ! Please restart from step 2 (Fetch Google Sheet) !');
+    res.status(200).send(returned);
   }).catch(e => {
     console.log(e);
     res.status(400).send(e);
   });
 })
 
-app.get('/draft_site',(req,res) => {
-  // TODO: fetch id of draft data and render that on home page
-  let returned = {
-    LandingPage: {
-      Logo: ['I am a draft website'],
-    }
-  }
-  res.status(200).render('home.hbs',returned);
-})
-
-app.post('/deploy_request', (req,res) => {
-  // TODO: find by req.body.id > switch published status to true > convert old published to false
-  res.status(200).send('published');
-})
-
 serverRunning();
 
-module.exports = {app, http};
+module.exports = {app, http, Users, SheetData};
