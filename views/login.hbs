@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <input id="password" type="text" name="" value="">
+    <button id="submit" type="button" name="button">Click me</button>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+      $(document).on('click','#submit',function() {
+
+        let data = {
+          password: $('#password').val()
+        };
+
+        data = JSON.stringify(data);
+
+        console.log(data);
+
+        return window.location.assign('/admin');
+
+        $.ajax({
+          url: '/login_request',
+          type: 'post',
+          data,
+          headers: {
+              'content-type': 'application/json',
+          }
+        }).done((msg) => {
+          console.log(msg);
+          window.location.assign('/admin.hbs');
+        }).fail((e) => {
+          // $('.error').show().html(e.responseText);
+          console.log(e.responseText);
+        });
+      })
+    </script>
+  </body>
+</html>

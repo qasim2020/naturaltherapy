@@ -35,6 +35,7 @@
     }
     body {
       line-height: 1;
+      background-color: #333333;
     }
     ol, ul {
       list-style: none;
@@ -247,7 +248,7 @@
 
             <p>Create Website</p>
             <p>Visit draft pages in all languages before making final deployments</p>
-            <button type="button" name="button">Visit Draft Website</button>
+            <a target="_blank" type="button" name="button" href="/draft_site">Visit Draft Website</a>
           </div>
           <div class="card">
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -258,7 +259,7 @@
 
             <p>Deployment</p>
             <p>Sattisfied with your site? Go ahead and deploy by clicking below</p>
-            <button type="button" name="button">Deploy</button>
+            <button id="deploy_request" type="button" name="button">Deploy</button>
           </div>
         </div>
       </section>
@@ -267,10 +268,39 @@
       <script type="text/javascript">
         $(document).on('click','#fetch_google_sheet',function() {
 
+          let data = {
+            token: "{{token}}",
+          }
+          data = JSON.stringify(data);
           $.ajax({
             url: '/fetch_google_sheet',
             type: 'get',
-            token: "{{token}}",
+            data,
+            headers: {
+                'content-type': 'application/json',
+            }
+          }).done((msg) => {
+            console.log(msg);
+            $('#deploy_request').attr('data_location',msg._id);
+          }).fail((e) => {
+            // $('.error').show().html(e.responseText);
+            console.log(e.responseText);
+          });
+        })
+
+        $(document).on('click','#deploy_request',function() {
+
+          let data = {
+            data_location: $('#deploy_request').attr('data_location'),
+            token: "{{token}}"
+          };
+
+          data = JSON.stringify(data);
+
+          $.ajax({
+            url: '/deploy_request',
+            type: 'post',
+            data,
             headers: {
                 'content-type': 'application/json',
             }

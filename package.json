@@ -4,7 +4,14 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watch",
+    "start": "node app.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "engines": {
+    "node": "10.9.0"
   },
   "repository": {
     "type": "git",
@@ -18,6 +25,7 @@
   "homepage": "https://github.com/Miscellaneous-Pk/naturaltherapy#readme",
   "dependencies": {
     "axios": "^0.19.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-pjax": "0.0.1",
@@ -25,7 +33,17 @@
     "googleapis": "^42.0.0",
     "hbs": "^4.0.4",
     "http": "0.0.0",
+    "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.15",
+    "mongoose": "^5.4.4",
+    "nodemailer": "^5.1.1",
     "reload": "^3.0.1"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7",
+    "supertest": "^4.0.2",
+    "supertest-session": "^4.0.0"
   }
 }
