@@ -38,7 +38,7 @@ hbs.registerHelper("inc", function(value, options) {
 });
 
 let authenticate = (req,res,next) => {
-  let token = req.body.token || req.query.token;
+  let token = req.params.token || req.body.token || req.query.token;
   Users.findByToken(token).then((user) => {
     if (!user) return Promise.reject('No user found for token :', token);
     req.params.user = user;
@@ -76,7 +76,13 @@ app.get('/publish',(req,res) => {
 })
 
 app.get('/',(req,res) => {
-  res.render('home.hbs');
+  SheetData.findOne({status: 'live'}).then(returned => {
+    if (!returned) return Promise.reject('Did not find any "Live" data ! Either update website using admin portal or Contact Developer !');
+    res.status(200).render('home.hbs',returned.en);
+  }).catch((e) => {
+    console.log(e);
+    res.status(400).render('error.hbs',{msg: e});
+  });
 })
 
 app.get('/login',(req,res) => {
@@ -108,7 +114,6 @@ app.post('/login_request',(req,res) => {
     return returned.generateAuthToken(req);
   }).then((user) => {
     if (!user) return Promise.reject('Failed to generate token ! Kindly contact the developer !');
-    console.log('token found !');
     return res.status(200).send(user.tokens[0].token);
   }).catch((e) => {
     console.log(e);
@@ -117,13 +122,14 @@ app.post('/login_request',(req,res) => {
 })
 
 app.get('/admin', authenticate,(req,res) => {
+
   res.render('admin.hbs',{
     google_link: process.env.google_link,
-    token: req.params.token
+    token: req.query.token
   });
 })
 
-app.get('/fetch_google_sheet', authenticate, (req,res) => {
+app.post('/fetch_google_sheet', authenticate, (req,res) => {
 
   sheet('naturaltherapy','read').then(msg => {
 
@@ -140,13 +146,14 @@ app.get('/fetch_google_sheet', authenticate, (req,res) => {
     console.log(e);
     res.status(400).send(e);
   });
+
 })
 
 app.get('/draft_site', authenticate, (req,res) => {
 
-  SheetData.findById(mongoose.Types.ObjectId(req.body.sheetId)).then(returned => {
+  SheetData.findById(mongoose.Types.ObjectId(req.query.sheetId)).then(returned => {
     if (!returned) return Promise.reject('Data not found ! Contact Developer !');
-    res.status(200).render('home.hbs',returned);
+    res.status(200).render('home.hbs',returned.en);
   }).catch((e) => {
     console.log(e);
     res.status(400).render('error.hbs',e.msg);
@@ -159,7 +166,7 @@ app.post('/deploy_request', authenticate, async (req,res) => {
     return SheetData.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.sheetId)},{$set: {status: 'live'}});
   }).then(returned => {
     if (!returned) return Promise.reject('Sheet not found ! Please restart from step 2 (Fetch Google Sheet) !');
-    res.status(200).send(returned);
+    res.status(200).send('done');
   }).catch(e => {
     console.log(e);
     res.status(400).send(e);

@@ -135,9 +135,11 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-evenly;
+
+      border-radius: 2px;
     }
 
-    .card > svg:nth-child(1) {
+    .card > svg:nth-child(1), .error > svg, .success > svg {
       position: absolute;
       left: 50%;
       top: 0%;
@@ -189,6 +191,80 @@
       color: #000000;
     }
 
+    .overlay {
+      display: none;
+
+      position: absolute;
+      width: 100%;
+      height: 100%;
+
+      /* Green 3 */
+      border-radius: 2px;
+    }
+
+    .success {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      background: #6FCF97;
+    }
+
+    .error {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      background: #F2994A;
+    }
+
+    .overlay > p {
+      /* Good ! Please make all possible changes in your google sheet and fetch data in step 2. */
+
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 156.4%;
+      /* or 23px */
+      text-align: center;
+
+      /* Gray 2 */
+      color: #4F4F4F;
+      padding: 0 1rem 8px 1rem;
+
+    }
+
+    .overlay a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .overlay button {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 156.4%;
+
+      /* background: #4f4f4f; */
+      padding: 2px 8px;
+      border: 1px solid #6fcf97;
+      color: #4f4f4f;
+
+      /* Green 3 */
+      background: #6FCF97;
+      /* shadow-card */
+      box-shadow: 0px 0px 86px rgba(0, 0, 0, 0.546);
+
+    }
+
+    .d-none {
+      display: none !important;
+    }
+
     @media (max-width: 1400px) {
       #landing-page > div:nth-child(2) {
         padding-top: 31vh;
@@ -196,6 +272,11 @@
       .card {
         margin: 0 1rem 2rem 1rem;
       }
+    }
+
+    .inactive {
+      pointer-events: none;
+      opacity: 0.4;
     }
 
     @media (max-height: 700px) {
@@ -218,7 +299,9 @@
           <hr>
         </div>
         <div class="">
+
           <div class="card">
+
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="22" cy="22" r="22" fill="#6FCF97"/>
             <path d="M23.562 15.4V28H20.646V17.74H18.126V15.4H23.562Z" fill="#4F4F4F"/>
@@ -226,20 +309,64 @@
 
             <p>Google Sheet</p>
             <p>Make amendments to your google sheet by visiting the link below</p>
-            <a target="_blank" type="button" name="button" href="{{google_link}}">Go to your sheet</a>
+            <button class="gotosheet" type="button" name="button" onclick="window.open('{{google_link}}');">Go to your sheet</button>
+
+            <div class="overlay success d-none">
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="22" fill="#6FCF97"/>
+              <path d="M19 27.2L14.8 23L13.4 24.4L19 30L31 18L29.6 16.6L19 27.2Z" fill="#4F4F4F"/>
+              </svg>
+
+              <p>Good ! Please make all possible changes in your google sheet and fetch data in step 2.</p>
+              <button class="gotosheet" type="button" name="button" onclick="window.open('{{google_link}}');">Go to your sheet</button>
+
+            </div>
+
+            <div class="overlay error d-none">
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="22" fill="#F2994A"/>
+              <path d="M21 25H23V27H21V25ZM21 17H23V23H21V17ZM21.99 12C16.47 12 12 16.48 12 22C12 27.52 16.47 32 21.99 32C27.52 32 32 27.52 32 22C32 16.48 27.52 12 21.99 12ZM22 30C17.58 30 14 26.42 14 22C14 17.58 17.58 14 22 14C26.42 14 30 17.58 30 22C30 26.42 26.42 30 22 30Z" fill="#4F4F4F"/>
+              </svg>
+
+              <p>Sorry something bad happened !</p>
+            </div>
+
           </div>
-          <div class="card">
+
+          <div class="card inactive">
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="22" cy="22" r="22" fill="#6FCF97"/>
             <path d="M26.116 25.624V28H16.594V26.11L21.454 21.52C21.97 21.028 22.318 20.608 22.498 20.26C22.678 19.9 22.768 19.546 22.768 19.198C22.768 18.694 22.594 18.31 22.246 18.046C21.91 17.77 21.412 17.632 20.752 17.632C20.2 17.632 19.702 17.74 19.258 17.956C18.814 18.16 18.442 18.472 18.142 18.892L16.018 17.524C16.51 16.792 17.188 16.222 18.052 15.814C18.916 15.394 19.906 15.184 21.022 15.184C21.958 15.184 22.774 15.34 23.47 15.652C24.178 15.952 24.724 16.384 25.108 16.948C25.504 17.5 25.702 18.154 25.702 18.91C25.702 19.594 25.558 20.236 25.27 20.836C24.982 21.436 24.424 22.12 23.596 22.888L20.698 25.624H26.116Z" fill="#4F4F4F"/>
             </svg>
 
 
-            <p>Fetch Info</p>
+            <p>Fetch Data</p>
             <p>Fetch your google sheets information by clicking below</p>
-            <button type="button" name="button" id="fetch_google_sheet">Fetch Google Sheet</button>
+            <button type="button" name="button" class="fetch_google_sheet">Fetch Your Data</button>
+
+            <div class="overlay success d-none">
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="22" fill="#6FCF97"/>
+              <path d="M19 27.2L14.8 23L13.4 24.4L19 30L31 18L29.6 16.6L19 27.2Z" fill="#4F4F4F"/>
+              </svg>
+
+              <p>Your data has been fetched from google sheet to this website server. Please visit sample website in next step.</p>
+
+              <button type="button" name="button" class="fetch_google_sheet">Fetch Again ?</button>
+            </div>
+
+            <div class="overlay error d-none">
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="22" fill="#F2994A"/>
+              <path d="M21 25H23V27H21V25ZM21 17H23V23H21V17ZM21.99 12C16.47 12 12 16.48 12 22C12 27.52 16.47 32 21.99 32C27.52 32 32 27.52 32 22C32 16.48 27.52 12 21.99 12ZM22 30C17.58 30 14 26.42 14 22C14 17.58 17.58 14 22 14C26.42 14 30 17.58 30 22C30 26.42 26.42 30 22 30Z" fill="#4F4F4F"/>
+              </svg>
+
+              <p>Sorry something bad happened !</p>
+            </div>
+
           </div>
-          <div class="card">
+
+          <div class="card inactive">
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="22" cy="22" r="22" fill="#6FCF97"/>
             <path d="M22.588 20.53C23.692 20.71 24.538 21.124 25.126 21.772C25.714 22.408 26.008 23.2 26.008 24.148C26.008 24.88 25.816 25.558 25.432 26.182C25.048 26.794 24.46 27.286 23.668 27.658C22.888 28.03 21.928 28.216 20.788 28.216C19.9 28.216 19.024 28.102 18.16 27.874C17.308 27.634 16.582 27.298 15.982 26.866L17.116 24.634C17.596 24.994 18.148 25.276 18.772 25.48C19.408 25.672 20.056 25.768 20.716 25.768C21.448 25.768 22.024 25.63 22.444 25.354C22.864 25.066 23.074 24.664 23.074 24.148C23.074 23.116 22.288 22.6 20.716 22.6H19.384V20.674L21.976 17.74H16.612V15.4H25.432V17.29L22.588 20.53Z" fill="#4F4F4F"/>
@@ -248,9 +375,32 @@
 
             <p>Create Website</p>
             <p>Visit draft pages in all languages before making final deployments</p>
-            <a target="_blank" type="button" name="button" href="/draft_site">Visit Draft Website</a>
+            <a class="draft_site_btn" target="_blank" type="button" name="button" onclick="draft_site()">Visit Draft Website</a>
+
+            <div class="overlay success d-none">
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="22" fill="#6FCF97"/>
+              <path d="M19 27.2L14.8 23L13.4 24.4L19 30L31 18L29.6 16.6L19 27.2Z" fill="#4F4F4F"/>
+              </svg>
+
+              <p>Nice ! Please test your website in all languages for any spelling mistakes or wrong placements. If there is something wrong, go to your google sheet and make the changes.</p>
+
+              <button class="draft_site_btn" type="button" name="button" onclick="draft_site()">Draft Website</button>
+
+            </div>
+
+            <div class="overlay error d-none">
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="22" fill="#F2994A"/>
+              <path d="M21 25H23V27H21V25ZM21 17H23V23H21V17ZM21.99 12C16.47 12 12 16.48 12 22C12 27.52 16.47 32 21.99 32C27.52 32 32 27.52 32 22C32 16.48 27.52 12 21.99 12ZM22 30C17.58 30 14 26.42 14 22C14 17.58 17.58 14 22 14C26.42 14 30 17.58 30 22C30 26.42 26.42 30 22 30Z" fill="#4F4F4F"/>
+              </svg>
+
+              <p>Sorry something bad happened !</p>
+            </div>
+
           </div>
-          <div class="card">
+
+          <div class="card inactive">
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="22" cy="22" r="22" fill="#6FCF97"/>
             <path d="M28.24 25.354H26.188V28H23.344V25.354H16.558V23.392L22.498 15.4H25.558L20.05 22.978H23.434V20.62H26.188V22.978H28.24V25.354Z" fill="#4F4F4F"/>
@@ -260,39 +410,82 @@
             <p>Deployment</p>
             <p>Sattisfied with your site? Go ahead and deploy by clicking below</p>
             <button id="deploy_request" type="button" name="button">Deploy</button>
+
+            <div class="overlay success d-none">
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="22" fill="#6FCF97"/>
+              <path d="M19 27.2L14.8 23L13.4 24.4L19 30L31 18L29.6 16.6L19 27.2Z" fill="#4F4F4F"/>
+              </svg>
+
+              <p>Your website is live please visit by clicking <a href="/" target="_blank">here.</a></p>
+
+              <button id="deploy_request" type="button" name="button">Deploy Again ?</button>
+
+            </div>
+
+            <div class="overlay error d-none">
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="22" cy="22" r="22" fill="#F2994A"/>
+              <path d="M21 25H23V27H21V25ZM21 17H23V23H21V17ZM21.99 12C16.47 12 12 16.48 12 22C12 27.52 16.47 32 21.99 32C27.52 32 32 27.52 32 22C32 16.48 27.52 12 21.99 12ZM22 30C17.58 30 14 26.42 14 22C14 17.58 17.58 14 22 14C26.42 14 30 17.58 30 22C30 26.42 26.42 30 22 30Z" fill="#4F4F4F"/>
+              </svg>
+
+              <p>Sorry something bad happened !</p>
+            </div>
+
           </div>
         </div>
       </section>
       <script src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
       <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
       <script type="text/javascript">
-        $(document).on('click','#fetch_google_sheet',function() {
 
+        $(document).on('click','.gotosheet',function() {
+          $(this).closest('.card').addClass('active').find('.success').removeClass('d-none');
+          $('.card:eq(1)').removeClass('inactive');
+        })
+
+        function draft_site() {
+          let sheetId = $('#deploy_request').attr('data_location');
+          window.open(`/draft_site?token={{token}}&sheetId=${sheetId}`);
+        }
+
+        $(document).on('click','.draft_site_btn',function() {
+          $(this).closest('.card').addClass('active').find('.success').removeClass('d-none');
+          $('.card:eq(3)').removeClass('inactive');
+        })
+
+        $(document).on('click','.fetch_google_sheet',function() {
+          $(this).closest('.card').find('.success').addClass('d-none');
+          $(this).closest('.card').find('.error').addClass('d-none');
           let data = {
             token: "{{token}}",
           }
           data = JSON.stringify(data);
           $.ajax({
             url: '/fetch_google_sheet',
-            type: 'get',
+            type: 'post',
             data,
             headers: {
                 'content-type': 'application/json',
             }
           }).done((msg) => {
             console.log(msg);
-            $('#deploy_request').attr('data_location',msg._id);
+            $('#deploy_request').attr('data_location',msg);
+            $(this).closest('.card').find('.success').removeClass('d-none');
+            $('.card:eq(2)').removeClass('inactive');
           }).fail((e) => {
-            // $('.error').show().html(e.responseText);
             console.log(e.responseText);
+            $(this).closest('.card').find('.error').removeClass('d-none').find('p').html(e.responseText);
           });
         })
 
         $(document).on('click','#deploy_request',function() {
+          $(this).closest('.card').find('.success').addClass('d-none');
+          $(this).closest('.card').find('.error').addClass('d-none');
 
           let data = {
-            data_location: $('#deploy_request').attr('data_location'),
-            token: "{{token}}"
+            token:`{{token}}`,
+            sheetId: $('#deploy_request').attr('data_location')
           };
 
           data = JSON.stringify(data);
@@ -306,8 +499,10 @@
             }
           }).done((msg) => {
             console.log(msg);
+            $(this).closest('.card').find('.success').removeClass('d-none');
+
           }).fail((e) => {
-            // $('.error').show().html(e.responseText);
+            $(this).closest('.card').find('.error').removeClass('d-none').find('p').html(e.responseText);
             console.log(e.responseText);
           });
         })

@@ -43,7 +43,7 @@ describe('Open pages just fine', () => {
 
   test('Should fetch google sheet data fine', async() => {
     await SheetData.find().deleteMany();
-    await currencySession.get('/fetch_google_sheet').set('Accept',`${process.env.test_call}`).send({
+    await currencySession.post('/fetch_google_sheet').set('Accept',`${process.env.test_call}`).send({
       token: currencySession.token,
     }).expect(msg => {
       expect(msg.text).not.toBe();
@@ -52,10 +52,7 @@ describe('Open pages just fine', () => {
   })
 
   test('Should fetch this google sheet id data as draft website', async() => {
-    await currencySession.get('/draft_site').set('Accept',`${process.env.test_call}`).send({
-      token: currencySession.token,
-      sheetId: currencySession.sheetId,
-    }).expect(200);
+    await currencySession.get(`/draft_site?token=${currencySession.token}&sheetId=${currencySession.sheetId}`).set('Accept',`${process.env.test_call}`).expect(200);
   })
 
   test('Should change status to pending of all live sheets before updating next to live', async() => {
@@ -63,16 +60,19 @@ describe('Open pages just fine', () => {
       token: currencySession.token,
       sheetId: currencySession.sheetId,
     }).expect(200);
-    await currencySession.get('/fetch_google_sheet').set('Accept',`${process.env.test_call}`).send({
+    console.log('deployment completed');
+    await currencySession.post('/fetch_google_sheet').set('Accept',`${process.env.test_call}`).send({
       token: currencySession.token,
     }).expect(msg => {
       expect(msg.text).not.toBe();
       currencySession.sheetId = msg.text;
     }).expect(200);
+    console.log('fetched new completed');
     await currencySession.post('/deploy_request').set('Accept',`${process.env.test_call}`).send({
       token: currencySession.token,
       sheetId: currencySession.sheetId,
     }).expect(200);
+    console.log('deployment completed 2');
   })
 
 })
