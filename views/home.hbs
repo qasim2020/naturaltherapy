@@ -496,7 +496,7 @@
         outline: 0px none transparent;
         height: 100%;
         border: none;
-        width: 100%;
+        width: 95%;
         padding: 1rem;
         font-size: 400%;
         font-weight: bold;
@@ -597,6 +597,17 @@
 
       .rt-bottom svg {
         padding: 0 1rem;
+      }
+
+      @media (max-width: 600px) {
+
+        .custom-container > textarea {
+          font-size: 200%;
+        }
+
+        .custom-container > textarea::placeholder {
+          font-size: 50%;
+        }
       }
 
       </style>
@@ -1787,6 +1798,7 @@
     $('.toggle_custom_container').on('click', function(e) {
       e.preventDefault();
       $('.custom-container').toggleClass('d-none');
+      $('section').not('section:eq(0)').addClass('d-none');
     })
 
     </script>
