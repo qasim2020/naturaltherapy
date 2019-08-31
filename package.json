@@ -31,6 +31,7 @@
     "express": "^4.17.1",
     "express-pjax": "0.0.1",
     "express-session": "^1.16.2",
+    "fs": "0.0.1-security",
     "googleapis": "^42.0.0",
     "handlebars": "^4.1.2",
     "hbs": "^4.0.4",
