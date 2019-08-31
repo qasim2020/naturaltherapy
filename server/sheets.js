@@ -77,9 +77,11 @@ function todayUpdates(auth, value) {
 
 function authorize(credentials, callback) {
   return new Promise((resolve,reject) => {
-    const {client_secret, client_id, redirect_uris} = credentials.content.installed;
-    const oAuth2Client = new google.auth.OAuth2(
-        client_id, client_secret, redirect_uris[0]);
+
+    const {redirect_uris} = credentials.content.installed;
+    const client_id = process.env.GOOGLECLIENTID;
+    const client_secret = process.env.CLIENTSECRET;
+    const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
 
     fs.readFile(TOKEN_PATH, (err, token) => {
       if (err) return getNewToken(oAuth2Client, callback);
