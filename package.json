@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "jest --watch",
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "jest": {
     "testEnvironment": "node"
