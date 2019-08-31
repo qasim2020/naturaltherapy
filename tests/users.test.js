@@ -16,7 +16,8 @@ describe('Open pages just fine', () => {
 
   test('Should sign up user', async() => {
     await Users.find().deleteMany();
-    await currencySession.get('/signup_request').set('Accept',`${process.env.test_call}`).send({
+    await currencySession.get('/signup_request?email=y-asmin60@outlook.com').set('Accept',`${process.env.test_call}`).send({
+
     }).expect(200);
   })
 

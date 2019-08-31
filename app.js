@@ -73,7 +73,6 @@ app.get('/publish',(req,res) => {
   sheet('naturaltherapy','read').then(msg => {
       let data = convertGoogleData(msg[0].values);
       console.log(JSON.stringify(data, 0, 2));
-      // console.log(data.LandingPage.Logo[0]);
       res.status(200).render('home.hbs',data);
   }).catch(e => console.log(e));
 })
@@ -93,13 +92,14 @@ app.get('/login',(req,res) => {
 })
 
 app.get('/signup_request',(req,res) => {
-  console.log('signup request');
+
+  console.log('signup request',process.env.Admin_Password);
   let user = new Users({
-    email: 'sajidaparveen@gmail.com',
-    password: '12341234'
+    email: req.query.email,
+    password: process.env.Admin_Password
   });
   user.save().then(msg => {
-    res.status(200).send(msg)
+    res.status(200).send('Password and email has been stored')
   }).catch(e => {
     console.log(e);
     res.status(404).send(e);
@@ -109,7 +109,7 @@ app.get('/signup_request',(req,res) => {
 app.post('/login_request',(req,res) => {
   console.log('request made');
   var user = _.pick(req.body,['password']);
-  user.email = "sajidaparveen@gmail.com";
+  user.email = "y-asmin60@outlook.com";
   // console.log(user);
   Users.findByCredentials(user.email, user.password).then((returned) => {
     console.log('returned');
