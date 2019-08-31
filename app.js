@@ -25,11 +25,40 @@ app.use(pjax());
 app.use(express.static(__dirname+'/static'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+// app.use(session({
+//   secret: process.env.SESSION_SECRET,
+//   resave: false,
+//   saveUninitialized: true,
+// }))
+//
+// app.use(function (req, res, next) {
+//   if (!req.session.views) {
+//     req.session.views = {}
+//   }
+//
+//   // get the url pathname
+//   var pathname = parseurl(req).pathname
+//
+//   // count the views
+//   req.session.views[pathname] = (req.session.views[pathname] || 0) + 1
+//
+//   next()
+// })
+
 app.use(session({
-  secret: 'oasdfkljh2j3lgh123ljkhl12kjh3',
-  resave: false,
-  saveUninitialized: true,
-}))
+    secret: process.env.SESSION_SECRET,
+    cookie: { maxAge: 2628000000 },
+    store: new (require('express-sessions'))({
+        storage: 'mongodb',
+        instance: mongoose, // optional
+        // host: 'localhost', // optional
+        // port: 27017, // optional
+        // db: 'test', // optional
+        // collection: 'sessions', // optional
+        // expire: 86400 // optional
+    })
+}));
+
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine','hbs');
 
