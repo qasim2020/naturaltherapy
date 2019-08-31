@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 // Generate test SMTP service account from ethereal.email
 // Only needed if you don't have a real mail account for testing
 var sendmail = (toEmail,code,subject) => {
+  console.log('sending mail lets see');
   return new Promise((resolve, reject) => {
 
     nodemailer.createTestAccount((err, account) => {
@@ -18,23 +19,19 @@ var sendmail = (toEmail,code,subject) => {
 
         // setup email data with unicode symbols
         let mailOptions = {
-            from: '"Request Raised" <letshelp@email.com>', // sender address
+            from: '"Natural Therapy" <naturaltherapy@gmail.com>', // sender address
             to: toEmail, // list of receivers
             subject: subject, // Subject line
             text: '', // plain text body
             html: `
-            <p>${code}</p>
-            <br>
-            <small><br>
-              * Don't reply to this email, it is a computer generated message.
-            </small>
+            ${code}
             ` // html body
         };
 
         // send mail with defined transport object
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-              // console.log(error);
+              console.log(error);
               return reject(error);
             }
             console.log('Message sent: %s', info.messageId);

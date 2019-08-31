@@ -9,7 +9,9 @@ const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
 const _ = require('lodash');
+const Handlebars = require('handlebars');
 const axios = require('axios');
+const fs = require('fs');
 
 const {serverRunning} = require('./js/serverRunning');
 const {sheet} = require('./server/sheets.js');
@@ -18,6 +20,7 @@ const {SheetData} = require('./models/sheetData');
 const {sendmail} = require('./js/sendmail');
 const {Subscription} = require('./models/subscription');
 const {mongoose} = require('./db/mongoose');
+const {Contacted} = require('./models/contacted');
 
 
 var app = express();
@@ -84,6 +87,45 @@ app.get('/',(req,res) => {
   }).catch((e) => {
     console.log(e);
     res.status(400).render('error.hbs',{msg: e});
+  });
+})
+
+function create_email(email_data) {
+  return new Promise(function(resolve, reject) {
+
+    return fs.readFile('./views/email.hbs', function(err, data){
+      if (!err) {
+        var source = data.toString();
+        var template = Handlebars.compile(source);
+        var result = template(email_data);
+        return resolve(result);
+      } else {
+        console.log(err);
+        return reject(err);
+      }
+  });
+
+  });
+}
+
+app.post('/contacted',(req,res) => {
+
+  let contacted = new Contacted({
+    browser_location: req.body.browser_location,
+    msg: req.body.value
+  });
+
+  // return res.render('email.hbs',contacted);
+
+  contacted.save().then(msg => {
+    res.status(200).send('done');
+    return create_email(contacted);
+  }).then(response => {
+    console.log('sending email now');
+    sendmail('qasimali24@gmail.com',response,'New Message from website').then((msg) => console.log(msg));
+  }).catch(e => {
+    console.log(e);
+    res.status(400).send(e);
   });
 })
 
@@ -178,4 +220,4 @@ app.post('/deploy_request', authenticate, async (req,res) => {
 
 serverRunning();
 
-module.exports = {app, http, Users, SheetData};
+module.exports = {app, http, Users, SheetData, Contacted};

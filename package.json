@@ -32,6 +32,7 @@
     "express-pjax": "0.0.1",
     "express-session": "^1.16.2",
     "googleapis": "^42.0.0",
+    "handlebars": "^4.1.2",
     "hbs": "^4.0.4",
     "http": "0.0.0",
     "jsonwebtoken": "^8.3.0",

@@ -383,6 +383,10 @@
   <body>
     <div class="sliders d-flex flex-col">
 
+      <svg id="active_slider" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="5" cy="5" r="4.5" stroke="#E0E0E0"/>
+      </svg>
+
       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="5" cy="5" r="4.5" stroke="#F2F2F2"/>
       </svg>
@@ -399,18 +403,13 @@
       <circle cx="5" cy="5" r="5" fill="#F2F2F2"/>
       </svg>
 
-
-
-      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="5" cy="5" r="4.5" stroke="#E0E0E0"/>
-      </svg>
     </div>
 
     <section id="landing-page" class="">
 
       <div class="logo">{{LandingPage.Logo}}</div>
       <!-- <div class=""> -->
-        <div id="booking" class="cta d-flex flex-col">
+      <div class="toggle_custom_container cta d-flex flex-col">
           <p>{{LandingPage.Booking.[0]}} <br> {{LandingPage.Booking.[1]}}</p>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M16 8L14.59 6.59L9 12.17V0H7V12.17L1.42 6.58L0 8L8 16L16 8Z" fill="#251e1e"/>
@@ -443,7 +442,7 @@
       </div>
       <div class="menu-items">
         {{#each MenuBtns}}
-        <li class=""><a href="{{this.[1]}}">{{this.[0]}}</a></li>
+        <li class=""><a class="{{this.[2]}}" href="{{this.[1]}}">{{this.[0]}}</a></li>
         {{/each}}
         <div class="">
           <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -511,12 +510,20 @@
         color: darkslategrey;
       }
 
-      .button-press {
-        background: #6FCF97;
+      .rt-bottom {
         position: absolute;
         right: 2rem;
-        color: darkslategray;
         bottom: 2rem;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+
+      .button-press {
+        background: #6FCF97;
+        position: relative;
+        color: darkslategray;
         cursor: pointer;
         display: flex;
         flex-direction: column;
@@ -576,13 +583,25 @@
         border-radius: 2px;
       }
 
-      @media (max-) {
+      .rt-bottom .error, .rt-bottom .success {
+        color: darkslategray;
+        padding: 6px 10px;
+        box-shadow: 0 0rem 1rem rgba(0, 0, 0, 0.1);
+        text-align: right;
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        margin-bottom: 1rem;
+        border-radius: 2px;
+      }
 
+      .rt-bottom svg {
+        padding: 0 1rem;
       }
 
       </style>
 
-      <div class="custom-container">
+      <div class="custom-container d-none">
 
         <div class="overlay">
           <p class="t-general t-4 shadow" >Please include your name and email !</p>
@@ -593,14 +612,31 @@
 
         <textarea name="name" rows="8" placeholder="Write here..."></textarea>
 
-        <div class="button-press shadow">
-          <p class="counter">218</p>
-          <small>words left</small>
-          <hr width="50%">
-          <p class="btn-query" >Ask Now !</p>
+        <div class="rt-bottom">
+          <div class="error d-none" style="background: lightcoral;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 13H11V15H9V13ZM9 5H11V11H9V5ZM9.99 0C4.47 0 0 4.48 0 10C0 15.52 4.47 20 9.99 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 9.99 0ZM10 18C5.58 18 2 14.42 2 10C2 5.58 5.58 2 10 2C14.42 2 18 5.58 18 10C18 14.42 14.42 18 10 18Z" fill="#4F4F4F"/>
+            </svg>
+
+            <p style="max-width:80vw; text-align: left; overflow: hidden">asdfasdfasdf</p>
+          </div>
+
+          <div class="success d-none" style="background: #6FCF97;">
+            <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.6 10.6L1.4 6.4L0 7.8L5.6 13.4L17.6 1.4L16.2 0L5.6 10.6Z" fill="#4F4F4F"/>
+            </svg>
+
+            <p style="max-width:80vw; text-align: left">asdfasdfasdf</p>
+          </div>
+          <div class="button-press shadow">
+            <p class="counter">218</p>
+            <small>words left</small>
+            <hr width="50%">
+            <p class="btn-query" >Ask Now !</p>
+          </div>
         </div>
 
-        <svg width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="toggle_custom_container" width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="42" cy="42" r="42" fill="#6FCF97"/>
           <path d="M25 25L59 60" stroke="#2F4F4F"/>
           <path d="M60 24L25 60.0294" stroke="#2F4F4F"/>
@@ -1521,6 +1557,11 @@
         transform: translate(-50%,0%);
       }
 
+      #footer a {
+        text-decoration: none;
+        color: white;
+      }
+
       @media (max-width: 768px) {
         #footer {
           background: url(/subbgmob.svg) center center fixed no-repeat;
@@ -1626,7 +1667,7 @@
 
         <ul>
           {{#each MenuBtns}}
-          <li>{{this.[0]}}</li>
+          <li class=""><a class="{{this.[2]}}" href="{{this.[1]}}">{{this.[0]}}</a></li>
           {{/each}}
         </ul>
 
@@ -1691,11 +1732,29 @@
 
     $('.custom-container > textarea').on('keyup',function(){
       if ($(this).val().length < 1) $('.overlay').css({opacity:1});
+      $('.custom-container .error').addClass('d-none');
+      $('.custom-container .success').addClass('d-none');
       $('.custom-container .counter').html(`${218 - $(this).val().length}`);
     });
 
     $('.button-press').on('click',function() {
-      let msg = $('.custom-container > textarea').val();
+      console.log('btn pressed');
+      $('.custom-container .error').addClass('d-none');
+      $('.custom-container .success').addClass('d-none');
+
+      if ($('.custom-container > textarea').val() == '') {
+        return $('.custom-container .error').removeClass('d-none').find('p').html('Please write your message and then click this button !');
+      } else if ($('.custom-container > textarea').val().length > 218) {
+        return $('.custom-container .error').removeClass('d-none').find('p').html('Please keep your message concise to save time so that I can get back to you quick !');
+      }
+
+      let data = {
+        browser_location: browser_location,
+        value : $('.custom-container > textarea').val(),
+      };
+
+      data = JSON.stringify(data);
+
       $.ajax({
         url: '/contacted',
         type: 'post',
@@ -1705,9 +1764,29 @@
         }
       }).done(msg => {
         console.log(msg);
+        return $('.custom-container .success').removeClass('d-none').find('p').html('Great ! As soon as I find time I will get back to you. Please make sure you included your contact details in this message. If not go ahead and submit your message again with your contact details. Happy Day :)');
       }).fail(e => {
         console.log('failed',e);
+        return $('.custom-container .error').removeClass('d-none').find('p').html(e.responseText);
       })
+    })
+
+    let browser_location = {};
+
+    $.ajax({
+      url: 'https://json.geoiplookup.io/',
+      type: 'get'
+    }).done(res => {
+      console.log(res);
+      browser_location = res;
+    }).fail(e => {
+      console.log(e);
+      return $('.custom-container .error').removeClass('d-none').find('p').html(e.responseText);
+    })
+
+    $('.toggle_custom_container').on('click', function(e) {
+      e.preventDefault();
+      $('.custom-container').toggleClass('d-none');
     })
 
     </script>

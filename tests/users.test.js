@@ -4,7 +4,7 @@ const express = require('express');
 const request = require('supertest');
 const session = require('supertest-session');
 const _ = require('lodash');
-const {app,mongoose,People,Orders,CurrencyRates,Users,axios, SheetData} = require('../app.js');
+const {app,mongoose,People,Orders,CurrencyRates,Users,axios, SheetData, Contacted} = require('../app.js');
 
 beforeEach(() => {
   // testSession = session(app);
@@ -13,6 +13,14 @@ beforeEach(() => {
 describe('Open pages just fine', () => {
 
   var currencySession = session(app);
+
+  test('Should store contacted message fine', async() => {
+    await Contacted.find().deleteMany();
+    await currencySession.post('/contacted').set('Accept',`${process.env.test_call}`).send({
+      value: 'i am a test message',
+      browser_location: {name: 'qasim', location: 'pakistan', ip: '123:123:123:123'}
+    }).expect(msg => expect(msg.text).toBe('done')).expect(200);
+  })
 
   test('Should sign up user', async() => {
     await Users.find().deleteMany();
