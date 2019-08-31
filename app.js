@@ -5,6 +5,7 @@ const reload = require('reload');
 const express = require('express');
 const pjax    = require('express-pjax');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
 const _ = require('lodash');
@@ -25,38 +26,11 @@ app.use(pjax());
 app.use(express.static(__dirname+'/static'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-// app.use(session({
-//   secret: process.env.SESSION_SECRET,
-//   resave: false,
-//   saveUninitialized: true,
-// }))
-//
-// app.use(function (req, res, next) {
-//   if (!req.session.views) {
-//     req.session.views = {}
-//   }
-//
-//   // get the url pathname
-//   var pathname = parseurl(req).pathname
-//
-//   // count the views
-//   req.session.views[pathname] = (req.session.views[pathname] || 0) + 1
-//
-//   next()
-// })
-
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: 2628000000 },
-    store: new (require('express-sessions'))({
-        storage: 'mongodb',
-        instance: mongoose, // optional
-        // host: 'localhost', // optional
-        // port: 27017, // optional
-        // db: 'test', // optional
-        // collection: 'sessions', // optional
-        // expire: 86400 // optional
-    })
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
 hbs.registerPartials(__dirname + '/views/partials');
