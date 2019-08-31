@@ -407,9 +407,10 @@
     </div>
 
     <section id="landing-page" class="">
+
       <div class="logo">{{LandingPage.Logo}}</div>
       <!-- <div class=""> -->
-        <div class="cta d-flex flex-col">
+        <div id="booking" class="cta d-flex flex-col">
           <p>{{LandingPage.Booking.[0]}} <br> {{LandingPage.Booking.[1]}}</p>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M16 8L14.59 6.59L9 12.17V0H7V12.17L1.42 6.58L0 8L8 16L16 8Z" fill="#251e1e"/>
@@ -449,6 +450,162 @@
             <path d="M0 12H18V10H0V12ZM0 7H18V5H0V7ZM0 0V2H18V0H0Z" fill="#E0E0E0"/>
           </svg>
         </div>
+      </div>
+
+      <style media="screen">
+      .custom-container {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        margin: auto;
+        height: 100vh;
+
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 27px;
+
+        /* Gray 5 */
+        color: #E0E0E0;
+
+        z-index: 300;
+        background: #6FCF97;
+      }
+
+      .custom-container > .overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        font-weight: bold;
+        /* opacity: 0.6; */
+        /* padding: 2rem; */
+        pointer-events: none;
+        /* z-index: -10; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .custom-container > textarea:focus{
+          outline: 0;
+      }
+
+      .custom-container > textarea {
+        outline: 0px none transparent;
+        height: 100%;
+        border: none;
+        width: 100%;
+        padding: 1rem;
+        font-size: 400%;
+        font-weight: bold;
+        z-index: 0;
+        background: none;
+        resize: none;
+        color: darkslategrey;
+      }
+
+      .custom-container > textarea::placeholder {
+        color: darkslategrey;
+      }
+
+      .button-press {
+        background: #6FCF97;
+        position: absolute;
+        right: 2rem;
+        color: darkslategray;
+        bottom: 2rem;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 2px;
+        padding: 1rem 5px;
+        opacity: 0.8;
+      }
+
+      .button-press:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05) !important;
+      }
+
+      .button-press > .counter {
+        font-weight: 900;
+        font-size: 300%;
+        margin-bottom: 7px;
+      }
+
+      .button-press > .btn-query {
+        font-size: 150%;
+        font-weight: bold;
+        margin-top: 0rem;
+        padding: 6px 12px;
+      }
+
+      .button-press > small {
+        /* margin-top: -1rem; */
+      }
+
+      .button-press > hr {
+        border: 1px solid darkslategray;
+      }
+
+      .shadow {
+        box-shadow: 0 0rem 1rem rgba(0, 0, 0, 0.1);
+      }
+
+      .t-general {
+        padding: 1rem;
+        margin: 3px 5px;
+        color: darkslategray;
+        text-align: center;
+      }
+
+      *:focus {
+        outline: 0;
+      }
+
+      .custom-container > svg {
+        position: absolute;
+        right: 2rem;
+        top: 2rem;
+        opacity: 0.5;
+        cursor: pointer;
+        border-radius: 2px;
+      }
+
+      @media (max-) {
+
+      }
+
+      </style>
+
+      <div class="custom-container">
+
+        <div class="overlay">
+          <p class="t-general t-4 shadow" >Please include your name and email !</p>
+          <p class="t-general t-1 shadow" >Type everything you need help with. </p>
+          <p class="t-general t-2 shadow" >Be open it is secure and private. </p>
+          <p class="t-general t-4 shadow" >Just ask !</p>
+        </div>
+
+        <textarea name="name" rows="8" placeholder="Write here..."></textarea>
+
+        <div class="button-press shadow">
+          <p class="counter">218</p>
+          <small>words left</small>
+          <hr width="50%">
+          <p class="btn-query" >Ask Now !</p>
+        </div>
+
+        <svg width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="42" cy="42" r="42" fill="#6FCF97"/>
+          <path d="M25 25L59 60" stroke="#2F4F4F"/>
+          <path d="M60 24L25 60.0294" stroke="#2F4F4F"/>
+        </svg>
+
       </div>
     </section>
 
@@ -1525,6 +1682,34 @@
       $('.test-card').removeClass('active');
       window.onresize(); // called to initially set the height.
     })
+
+    $('.custom-container > textarea').on('keydown',function(){
+      $('.custom-container > .overlay').css({opacity: 0});
+    });
+
+    $('.custom-container > textarea').trigger('keyup');
+
+    $('.custom-container > textarea').on('keyup',function(){
+      if ($(this).val().length < 1) $('.overlay').css({opacity:1});
+      $('.custom-container .counter').html(`${218 - $(this).val().length}`);
+    });
+
+    $('.button-press').on('click',function() {
+      let msg = $('.custom-container > textarea').val();
+      $.ajax({
+        url: '/contacted',
+        type: 'post',
+        data: data,
+        headers: {
+          "content-type": "application/json"
+        }
+      }).done(msg => {
+        console.log(msg);
+      }).fail(e => {
+        console.log('failed',e);
+      })
+    })
+
     </script>
 
   </body>
