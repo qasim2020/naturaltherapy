@@ -2,7 +2,7 @@
   "name": "naturaltherapy",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest --watch",
     "start": "node index.js"
