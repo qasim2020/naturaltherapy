@@ -1694,14 +1694,83 @@
     <script type="text/javascript">
     window.onresize = function() {
         $('section').height(window.innerHeight);
-
+        $('.custom-container').height(window.innerHeight);
+        $('section').not(':eq(0)').addClass('d-none');
         if (window.innerWidth < 768) {
           trimTestimonialsCard();
         } else {
           orignalTestimonialCard();
         }
     }
+
     window.onresize(); // called to initially set the height.
+
+    let info = {
+      down: 0,
+      up: 0,
+    };
+
+    $('*').on('mouseover',function(e) {
+      if ($(this).closest('section').length > 0) {
+        console.log('exists');
+        info.current = this;
+      }
+      // console.log($(this).closest('section'));
+      // console.log($(`${e.target.nodeName}`));
+      // info.current = this;
+    })
+
+    $('*').bind('mousewheel', function(e){
+        info.didScroll = true;
+        info.up = e.originalEvent.wheelDelta /120 > 0;
+        // if(e.originalEvent.wheelDelta /120 > 0) {
+        //     console.log('scrolling up !');
+        //     info.down = 0;
+        //     info.up += 1;
+        // }
+        // else{
+        //     console.log('scrolling down !');
+        //     info.down += 1;
+        //     info.up = 0;
+        // }
+
+        // if (info.up > 50) console.log('go up');
+        // if (info.down > 50) console.log('go down');
+    });
+
+    setInterval(function() {
+        if ( info.didScroll ) {
+            info.didScroll = false;
+            if (!info.current) return console.log('not found any element');;
+            $(info.current).closest('section').addClass('d-none');
+            if (info.up) {
+              console.log('go up now');
+              $(info.current).siblings().prev('section');
+            }
+            else {
+              $(info.current).siblings().next('section');
+              console.log('go down now');
+            }
+        }
+    }, 500);
+
+    window.onscroll = function(e) {
+      // print "false" if direction is down and "true" if up
+      // console.log(e.target.nodeName);
+      console.log(this.oldScroll > this.scrollY);
+      if (this.oldScroll > this.scrollY) {
+        info.down = 0;
+        info.up += 1;
+      } else {
+        // i = i - 1;
+        info.down += 1;
+        info.up = 0;
+      }
+      this.oldScroll = this.scrollY;
+
+      if (info.up > 50) console.log('now go up');
+      if (info.down > 50) console.log('now go down');
+    }
 
     function trimTestimonialsCard() {
       var string;
