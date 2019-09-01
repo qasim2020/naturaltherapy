@@ -1693,6 +1693,7 @@
     <script type="text/javascript" src="/jquery.pjax.js"></script>
     <script src="/reload/reload.js"></script>
     <script type="text/javascript">
+
     window.onresize = function() {
         $('section').height(window.innerHeight);
         $('.custom-container').height(window.innerHeight);
@@ -1706,10 +1707,7 @@
 
     window.onresize(); // called to initially set the height.
 
-    let info = {
-      down: 0,
-      up: 0,
-    };
+    let info = {};
 
     $('*').on('mouseover',function(e) {
 
@@ -1724,28 +1722,19 @@
     setInterval(function() {
         if ( info.didScroll ) {
             info.didScroll = false;
-            // console.log(info);
             if (info.up) {
               if (!$(`#${info.current}`).prevAll('section:eq(0)').length) return console.log('no more content up there');
               $(`#${info.current}`).addClass('d-none');
               $(`#${info.current}`).prevAll('section:eq(0)').removeClass('d-none');
               let index = $( "section" ).index( $(`#${info.current}`).prevAll('section:eq(0)') );
               $('#active_slider').insertBefore( $(`.sliders > svg:eq(${index})`) );
-              console.log(index);
             }
             else {
               if (!$(`#${info.current}`).nextAll('section:eq(0)').length) return console.log('no more content down there');
               $(`#${info.current}`).addClass('d-none');
               $(`#${info.current}`).nextAll('section:eq(0)').removeClass('d-none');
               let index = $( "section" ).index( $(`#${info.current}`).nextAll('section:eq(0)') );
-              // let index = $( "section" ).index( $(`#${info.current}`) );
-              $('#active_slider').insertAfter( $(`.sliders > svg:eq(${index})`) )
-              // $('#active_slider').css('order',index)
-              console.log(index);
-              // let current_order = parseInt($('#active_slider').css('order')) + 1;
-              // $('#active_slider').css('order',current_order)
-              //
-              // console.log($('#active_slider').css('order'));
+              $('#active_slider').insertAfter( $(`.sliders > svg:eq(${index})`) );
             }
         }
     }, 10);
@@ -1845,6 +1834,16 @@
     $('.toggle_custom_container').on('click', function(e) {
       e.preventDefault();
       $('.custom-container').toggleClass('d-none');
+    })
+
+    $('li > a').on('click',function() {
+      console.log($(this).attr('href'));
+      let id = $(this).attr('href');
+      if (!id) return;
+      $(id).removeClass('d-none');
+      $('section').not(id).addClass('d-none');
+      let index = parseInt($( "section" ).index( $(id) )) + 1;
+      $('#active_slider').insertBefore( $(`.sliders > svg:eq(${index})`) );
     })
 
     </script>
