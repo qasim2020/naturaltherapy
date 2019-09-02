@@ -51,6 +51,10 @@
     	border-spacing: 0;
     }
 
+    section {
+      overflow: hidden;
+    }
+
     #landing-page {
         display: grid;
         height: 100vh;
@@ -89,7 +93,7 @@
       padding: 1rem 2rem;
       margin-right: 2rem;
       margin-top: 2rem;
-      border-radius: 2px;
+      border-radius: 34px;
 
       font-family: Montserrat;
       font-style: normal;
@@ -1709,15 +1713,58 @@
 
     let info = {};
 
-    $('*').on('mouseover',function(e) {
-
-    })
-
-    $('*').bind('mousewheel', function(e){
-        if ($(this).closest('section').attr('id')) info.current = $(this).closest('section').attr('id');
-        info.didScroll = true;
-        info.up = e.originalEvent.wheelDelta /120 > 0;
+    var ts;
+    $('*').on('touchstart', function (e){
+       ts = e.originalEvent.touches[0].clientY;
+       info.current = $(e.target).closest('section').attr('id');
+       // console.log(info.current);
     });
+
+    $('*').on('touchend', function (e){
+       var te = e.originalEvent.changedTouches[0].clientY;
+       console.log(ts,te);
+       if(ts > te+50){
+         info.didScroll = true
+         info.up = false;
+       } else if(ts < te-50){
+         info.didScroll = true
+         info.up = true;
+       }
+    });
+
+    $('*').on('mousewheel',function(event){
+      // var pageX = (event.type.toLowerCase() === 'mousewheel') ? event.pageX : event.originalEvent.touches[0].pageX;
+      console.log('mousewhee;');
+      if ($(this).closest('section').attr('id')) info.current = $(this).closest('section').attr('id');
+      info.didScroll = true;
+      info.up = event.originalEvent.wheelDelta / 120 > 0;
+    });
+
+    // info.lastScrollTop = 0;
+
+    // $(document).scroll(function(e) {
+    //   return console.log(e);
+    //   return $('.logo').html('asdf');
+    //   var st = $(this).scrollTop();
+    //   if (st > info.lastScrollTop){
+    //       info = {
+    //         didScroll: true,
+    //         up: true,
+    //         down: false,
+    //         current: $('section').not('.d-none').attr('id')
+    //       }
+    //       $('.logo').html(info.current);
+    //   } else {
+    //     info = {
+    //       didScroll: true,
+    //       up: false,
+    //       down: true,
+    //       current: $('section').not('.d-none').attr('id')
+    //     }
+    //     $('.logo').html(info.current);
+    //   }
+    //   info.lastScrollTop = st;
+    // });
 
     setInterval(function() {
         if ( info.didScroll ) {
@@ -1768,7 +1815,7 @@
     $(document).on('click','.bg-dark-overlay',function() {
       $('.bg-dark-overlay').addClass('d-none');
       $('.test-card').removeClass('active');
-      window.onresize(); // called to initially set the height.
+      // window.onresize(); // called to initially set the height.
     })
 
     $('.custom-container > textarea').on('keydown',function(){
