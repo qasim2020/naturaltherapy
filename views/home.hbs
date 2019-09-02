@@ -689,7 +689,6 @@
       #services > div:nth-child(1) {
         grid-row: 1/2;
         grid-column: 1/-1;
-
         align-self: center;
         padding-top: 2rem;
       }
@@ -933,6 +932,7 @@
 
         #services > div:nth-child(1) {
           padding: 1rem;
+          display: none;
         }
 
         #services > div:nth-child(4) {
@@ -1157,6 +1157,10 @@
           padding: 0 3rem;
           align-self: auto;
           grid-column: 1/-1;
+        }
+
+        #aboutme .aboutmeheading {
+          display: none;
         }
 
         .aboutmeheading p {
@@ -1698,10 +1702,14 @@
     <script src="/reload/reload.js"></script>
     <script type="text/javascript">
 
+    $(document).ready( function() {
+      console.log('here');
+      $('section').not(':eq(0)').addClass('d-none');
+    })
+
     window.onresize = function() {
         $('section').height(window.innerHeight);
         $('.custom-container').height(window.innerHeight);
-        $('section').not(':eq(0)').addClass('d-none');
         if (window.innerWidth < 768) {
           trimTestimonialsCard();
         } else {
@@ -1737,38 +1745,15 @@
       console.log('mousewhee;');
       if ($(this).closest('section').attr('id')) info.current = $(this).closest('section').attr('id');
       info.didScroll = true;
+      console.log(info.current);
       info.up = event.originalEvent.wheelDelta / 120 > 0;
     });
-
-    // info.lastScrollTop = 0;
-
-    // $(document).scroll(function(e) {
-    //   return console.log(e);
-    //   return $('.logo').html('asdf');
-    //   var st = $(this).scrollTop();
-    //   if (st > info.lastScrollTop){
-    //       info = {
-    //         didScroll: true,
-    //         up: true,
-    //         down: false,
-    //         current: $('section').not('.d-none').attr('id')
-    //       }
-    //       $('.logo').html(info.current);
-    //   } else {
-    //     info = {
-    //       didScroll: true,
-    //       up: false,
-    //       down: true,
-    //       current: $('section').not('.d-none').attr('id')
-    //     }
-    //     $('.logo').html(info.current);
-    //   }
-    //   info.lastScrollTop = st;
-    // });
 
     setInterval(function() {
         if ( info.didScroll ) {
             info.didScroll = false;
+            console.log(info);
+            if (info.current == info.oldcurrent) return console.log('dont scroll yet');
             if (info.up) {
               if (!$(`#${info.current}`).prevAll('section:eq(0)').length) return console.log('no more content up there');
               $(`#${info.current}`).addClass('d-none');
@@ -1783,6 +1768,7 @@
               let index = $( "section" ).index( $(`#${info.current}`).nextAll('section:eq(0)') );
               $('#active_slider').insertAfter( $(`.sliders > svg:eq(${index})`) );
             }
+            info.oldcurrent = info.current;
         }
     }, 10);
 
