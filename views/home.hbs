@@ -52,7 +52,7 @@
     }
 
     section {
-      overflow: hidden;
+      min-height: 690px;
     }
 
     #landing-page {
@@ -932,7 +932,6 @@
 
         #services > div:nth-child(1) {
           padding: 1rem;
-          display: none;
         }
 
         #services > div:nth-child(4) {
@@ -1160,7 +1159,7 @@
         }
 
         #aboutme .aboutmeheading {
-          display: none;
+          /* display: none; */
         }
 
         .aboutmeheading p {
@@ -1704,12 +1703,15 @@
 
     $(document).ready( function() {
       console.log('here');
+      if (window.innerHeight < 690) return;
       $('section').not(':eq(0)').addClass('d-none');
     })
 
     window.onresize = function() {
-        $('section').height(window.innerHeight);
+        $('section').css('min-height',window.innerHeight);
         $('.custom-container').height(window.innerHeight);
+        $(document).trigger('ready');
+        return;
         if (window.innerWidth < 768) {
           trimTestimonialsCard();
         } else {
@@ -1723,12 +1725,14 @@
 
     var ts;
     $('*').on('touchstart', function (e){
+      return;
        ts = e.originalEvent.touches[0].clientY;
        info.current = $(e.target).closest('section').attr('id');
        // console.log(info.current);
     });
 
     $('*').on('touchend', function (e){
+      return;
        var te = e.originalEvent.changedTouches[0].clientY;
        console.log(ts,te);
        if(ts > te+50){
@@ -1750,10 +1754,12 @@
     });
 
     setInterval(function() {
+        if (window.innerHeight < 690) return console.log('returning');
+
         if ( info.didScroll ) {
             info.didScroll = false;
             console.log(info);
-            if (info.current == info.oldcurrent) return console.log('dont scroll yet');
+            // if (info.current == info.oldcurrent) return console.log('dont scroll yet');
             if (info.up) {
               if (!$(`#${info.current}`).prevAll('section:eq(0)').length) return console.log('no more content up there');
               $(`#${info.current}`).addClass('d-none');
@@ -1792,15 +1798,15 @@
     }
 
     $(document).on('click','.test-card',function() {
-      if (window.innerWidth > 1024) return;
-      string = $(this).find('p').attr('original');
-      $(this).addClass('active').find('p').html(string);
-      $('.bg-dark-overlay').removeClass('d-none');
+      // if (window.innerWidth > 1024) return;
+      // string = $(this).find('p').attr('original');
+      // $(this).addClass('active').find('p').html(string);
+      // $('.bg-dark-overlay').removeClass('d-none');
     })
 
     $(document).on('click','.bg-dark-overlay',function() {
-      $('.bg-dark-overlay').addClass('d-none');
-      $('.test-card').removeClass('active');
+      // $('.bg-dark-overlay').addClass('d-none');
+      // $('.test-card').removeClass('active');
       // window.onresize(); // called to initially set the height.
     })
 
@@ -1873,10 +1879,13 @@
       console.log($(this).attr('href'));
       let id = $(this).attr('href');
       if (!id) return;
-      $(id).removeClass('d-none');
-      $('section').not(id).addClass('d-none');
       let index = parseInt($( "section" ).index( $(id) )) + 1;
       $('#active_slider').insertBefore( $(`.sliders > svg:eq(${index})`) );
+
+      if (window.innerHeight < 690) return console.log('returning');
+
+      $(id).removeClass('d-none');
+      $('section').not(id).addClass('d-none');
     })
 
     </script>
