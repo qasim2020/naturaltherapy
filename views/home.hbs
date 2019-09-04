@@ -1703,23 +1703,23 @@
 
     $(document).ready( function() {
       console.log('here');
-      if (window.innerHeight < 690) return;
-      $('section').not(':eq(0)').addClass('d-none');
+      $('.custom-container').height(window.innerHeight);
+      if (window.innerHeight < 690) {
+        $('section').css('min-height',window.innerHeight);
+        $('section').removeClass('d-none');
+      } else {
+        $('section').css('height',window.innerHeight);
+        $('section').not(':eq(0)').addClass('d-none');
+      }
+
     })
 
     window.onresize = function() {
-        $('section').css('min-height',window.innerHeight);
-        $('.custom-container').height(window.innerHeight);
+
         $(document).trigger('ready');
-        return;
-        if (window.innerWidth < 768) {
-          trimTestimonialsCard();
-        } else {
-          orignalTestimonialCard();
-        }
+
     }
 
-    window.onresize(); // called to initially set the height.
 
     let info = {};
 
