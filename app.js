@@ -81,9 +81,45 @@ app.get('/publish',(req,res) => {
 })
 
 app.get('/',(req,res) => {
-  SheetData.findOne({status: 'live'}).then(returned => {
+  SheetData.findOne({status: 'live'}).lean().then(returned => {
     if (!returned) return Promise.reject('Did not find any "Live" data ! Either update website using admin portal or Contact Developer !');
+    returned.en = {...returned.en,
+      urdu_flag: 'inactive',
+      nok_flag: 'inactive',
+      eng_flag: 'active'
+    }
+
+    console.log(returned.en);
     res.status(200).render('home.hbs',returned.en);
+  }).catch((e) => {
+    res.status(400).render('error.hbs',{msg: e});
+  });
+})
+
+app.get('/urdu',(req,res) => {
+  SheetData.findOne({status: 'live'}).lean().then(returned => {
+    if (!returned) return Promise.reject('Did not find any "Live" data ! Either update website using admin portal or Contact Developer !');
+    returned.ur = {...returned.ur,
+      urdu_flag: 'active',
+      nok_flag: 'inactive',
+      eng_flag: 'inactive'
+    }
+    res.status(200).render('home.hbs',returned.ur);
+  }).catch((e) => {
+    console.log(e);
+    res.status(400).render('error.hbs',{msg: e});
+  });
+})
+
+app.get('/nok',(req,res) => {
+  SheetData.findOne({status: 'live'}).lean().then(returned => {
+    if (!returned) return Promise.reject('Did not find any "Live" data ! Either update website using admin portal or Contact Developer !');
+    returned.nok = {...returned.nok,
+      urdu_flag: 'inactive',
+      nok_flag: 'active',
+      eng_flag: 'inactive'
+    }
+    res.status(200).render('home.hbs',returned.nok);
   }).catch((e) => {
     console.log(e);
     res.status(400).render('error.hbs',{msg: e});
