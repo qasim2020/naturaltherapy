@@ -254,6 +254,14 @@ app.post('/deploy_request', authenticate, async (req,res) => {
   });
 })
 
+app.get('/documentation',(req,res) => {
+  res.status(200).render('documentation.hbs',{
+    urdu_flag: 'inactive',
+    nok_flag: 'inactive',
+    eng_flag: 'active',
+  });
+})
+
 serverRunning();
 
 module.exports = {app, http, Users, SheetData, Contacted};
