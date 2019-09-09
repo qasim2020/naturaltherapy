@@ -137,6 +137,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
 
       font-family: Montserrat;
       font-style: normal;
@@ -389,6 +390,22 @@
       display: none;
     }
 
+    .welcome-text > a {
+      text-decoration: none;
+      color: #f2f2f2;
+
+      padding: 2px 8px;
+      margin: 8px 8px;
+      border-radius: 2px;
+      background: #333333;
+
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 100;
+      font-size: 13px;
+      line-height: 211.9%;
+    }
+
     </style>
   </head>
   <body>
@@ -433,6 +450,7 @@
         <p class="welcome">{{LandingPage.Welcome.[0]}}</p>
         <p class="nlp">{{LandingPage.Welcome.[1]}}</p>
         <small><b>{{LandingPage.Welcome.[2]}} <br class=""> {{LandingPage.Welcome.[3]}}</b></small>
+        <a href="/documentation#page_intro">Learn More</a>
       </div>
       <div class="social-media-icons d-flex flex-col">
 
@@ -1140,7 +1158,7 @@
         <p>{{ServicesPage.service1.[0]}}</p>
         <div class="servicesCardbtnarea">
           <p>{{ServicesPage.service1.[2]}}</p>
-          <button type="button" name="button">Learn More</button>
+          <button type="button" name="button" onclick="window.location = '/documentation#page_services_a'">Learn More</button>
         </div>
       </div>
 
@@ -1149,7 +1167,7 @@
         <p>{{ServicesPage.service2.[0]}}</p>
         <div class="servicesCardbtnarea">
           <p>{{ServicesPage.service2.[2]}}</p>
-          <button type="button" name="button">Learn More</button>
+          <button type="button" name="button" onclick="window.location = '/documentation#page_services_b'">Learn More</button>
         </div>
       </div>
 
@@ -1158,7 +1176,7 @@
         <p>{{ServicesPage.service3.[0]}}</p>
         <div class="servicesCardbtnarea">
           <p>{{ServicesPage.service3.[2]}}</p>
-          <button type="button" name="button">Learn More</button>
+          <button type="button" name="button" onclick="window.location = '/documentation#page_services_c'">Learn More</button>
         </div>
       </div>
 
@@ -1258,7 +1276,6 @@
           color: #F2F2F2;
           z-index: 100;
           margin: 2rem auto;
-          padding: 0 3rem;
           align-self: auto;
           grid-column: 1/-1;
         }
@@ -1288,6 +1305,31 @@
         }
 
       }
+
+      .links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem 0;
+
+        color: #f2f2f2;
+      }
+
+      .links > * {
+        text-decoration: none;
+        color: inherit;
+
+        padding: 2px 8px;
+        margin: 0 8px;
+        border-radius: 2px;
+        background: #333333;
+
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 100;
+        font-size: 13px;
+        line-height: 211.9%;
+      }
     </style>
 
     <section id="aboutme" class="">
@@ -1298,6 +1340,10 @@
           <hr>
         </div>
         <p class="aboutmetext">{{AboutPage.headingtext.[0]}}</p>
+        <div class="links">
+          <a href="/documentation#page_about">Read More</a>
+          <a href="/documentation#page_cert">View Certifications</a>
+        </div>
       </div>
     </section>
 

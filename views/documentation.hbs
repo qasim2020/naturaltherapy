@@ -47,6 +47,11 @@
         padding-left: 1rem;
       }
 
+      .logo > a {
+        text-decoration: none;
+        color: inherit;
+      }
+
       .flags {
         display: flex;
         padding-right: 1rem;
@@ -195,23 +200,22 @@
         }
       }
 
-      .carousal {
-
-      }
-
-      .carousal > img {
+      .main_text > img {
         margin-top: 1rem;
-        width: 90vw;
-        max-width: 360px;
         margin-right: 10px;
+        margin-bottom: 10px;
+        margin-left: 0px;
+        width: 90vw;
+        max-width: 100%;
         /* Green 3 */
         border: 5px solid #6FCF97;
         box-sizing: border-box;
         border-radius: 10px;
-      }
 
-      .carousal > img::after {
-        clear: both;
+        left: 50%;
+        position: relative;
+        transform: translate(-50%);
+        z-index: -10;
       }
 
     </style>
@@ -219,7 +223,7 @@
   <body>
 
     <nav>
-      <p class="logo">Natural Therapy</p>
+      <p class="logo"><a href="/">Natural Therapy</a></p>
       <div class="flags">
         <div class="flag {{urdu_flag}}" link="/urdu">
           <svg class="" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -310,14 +314,14 @@
       <ul class="sidebar">
         <li linked_with="intro" class="active"><a href="#intro">What is NLP?</a></li>
         <li linked_with="services"><a href="#services">Services</a> </li>
-        <li linked_with="services_a">&nbsp &nbsp <a href="#services_a">Neauro Linguistic Programming</a> </li>
-        <li linked_with="services_b">&nbsp &nbsp <a href="#services_b">Distance Healing Therapy</a> </li>
-        <li linked_with="services_c">&nbsp &nbsp <a href="#services_c">Counselling</a> </li>
+        <li linked_with="services_a">&nbsp &nbsp <a href="#services_a">Emotional Freedom Technique</a> </li>
+        <li linked_with="services_b">&nbsp &nbsp <a href="#services_b">Neuro Linguistic Programming</a> </li>
+        <li linked_with="services_c">&nbsp &nbsp <a href="#services_c">Energy / Distance Healing</a> </li>
         <li linked_with="about"><a href="#about">About Me</a> </li>
         <li linked_with="cert"><a href="#cert">Certifications</a> </li>
         <li linked_with="cert_a">&nbsp &nbsp <a href="#cert_a">NLP Practitioner</a> </li>
         <li linked_with="cert_b">&nbsp &nbsp <a href="#cert_b">Mindfulness Practitioner</a> </li>
-        <li linked_with="cert_c">&nbsp &nbsp <a href="#cert_c">Counselling Practitioner</a> </li>
+        <li linked_with="cert_d">&nbsp &nbsp <a href="#cert_d">Counselling Practitioner</a> </li>
         <li linked_with="faq" style="margin-right: 50px"><a href="#faq">FAQs</a> </li>
       </ul>
 
@@ -330,27 +334,34 @@
         <h3 highlighter="true" id="services">2. Services</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-        <h4 highlighter="true" id="services_a">a. Neauro Linguistic Programming</h4>
+        <h4 highlighter="true" id="services_a">a. Emotional Freedom Technique</h4>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-        <h4 highlighter="true" id="services_b">b. Distance Healing Therapy</h4>
+        <h4 highlighter="true" id="services_b">b. Neuro Linguistic Programming</h4>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-        <h4 highlighter="true" id="services_c">c. Counselling</h4>
+        <h4 highlighter="true" id="services_c">c. Energy / Distance Healing</h4>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
         <h3 highlighter="true" id="about">3. About Me</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
         <h3 highlighter="true" id="cert">4. Certifications</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-        <div class="carousal">
-          <img highlighter="true" id="cert_a" src="/cert_nlp.jpg" alt="">
-          <img highlighter="true" id="cert_b" src="/cert_mindfulness.jpg" alt="">
-          <img highlighter="true" id="cert_c" src="/cert_counselling.jpg" alt="">
-        </div>
+        <h4 highlighter="true" id="cert_a">a. NLP Practitioner</h4>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <img src="/cert_nlp.jpg" alt="">
 
-        <h3 highlighter="true" id="faq">5. FAQs</h3>
+        <h4 highlighter="true" id="cert_b">b. Mindfulness Practitioner</h4>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <img src="/cert_mindfulness.jpg" alt="">
+
+        <h4 highlighter="true" id="cert_d">c. Counselling Practitioner</h4>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <img src="/cert_counselling.jpg" alt="">
+
+        <h3 highlighter="true" id="faq" style="clear: both; padding-top: 2rem;">5. FAQs</h3>
 
         <h4>a. lorem ipsumlo rem ip sumlorem ipsum ?</h4>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -374,10 +385,15 @@
     <script type="text/javascript">
 
       $(document).ready(function() {
-        let arrayofli = $(`[linked_with]`);
+
+        var url = window.location.hash;
+        var hash = url.split('#page_')[1];
+        console.log({hash});
+        $(`[href="#${hash}"]`).trigger('click');
 
         if (window.innerWidth > 768) return;
 
+        let arrayofli = $(`[linked_with]`);
         $.each(arrayofli, (key,val) => {
           let myposnindiv = $(val).offset().left;
           let visibitiy = window.innerWidth > myposnindiv + $(val).width();
@@ -390,6 +406,8 @@
           }
           $(val).attr({moveleft});
         })
+
+
 
       })
 
