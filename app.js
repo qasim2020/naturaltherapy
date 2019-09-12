@@ -57,17 +57,33 @@ let authenticate = (req,res,next) => {
 };
 
 let convertGoogleData = function(data) {
-  let part = '', poppedItem = '', nobject = {};
+  let part = '', poppedItem = '', nobject = {}, iterate = 0;
   let en = data;
   _.each(en,(v,i) => {
+
     if (!v[0] || i == 0) {
       part = en[i+1][0].replace(/ /g,'');
       nobject[part] = {};
       return;
     }
-    poppedItem = v.shift().replace(/ /g,'');
-    if (!v[0]) return;
-    nobject[part][poppedItem] = v;
+    switch (part) {
+      case 'Documentation':
+        if (!v[1]) return;
+        let sortings = v.map((cV,index,arr) => {
+          if (index == 0) return {[arr[0].replace(/ /g,'')]: arr[1]};
+          if (index == 1) return null;
+          if (cV.indexOf('img:') != -1) return {image: cV.split('img:')[1]};
+          return {para: cV};
+        }).filter(cV => cV != null);
+        console.log(sortings);
+        nobject[part][iterate++] = sortings;
+        break;
+      default:
+        poppedItem = v.shift().replace(/ /g,'');
+        if (!v[0]) return;
+        nobject[part][poppedItem] = v;
+    }
+
   })
   return nobject;
 }
@@ -255,10 +271,17 @@ app.post('/deploy_request', authenticate, async (req,res) => {
 })
 
 app.get('/documentation',(req,res) => {
-  res.status(200).render('documentation.hbs',{
-    urdu_flag: 'inactive',
-    nok_flag: 'inactive',
-    eng_flag: 'active',
+  SheetData.findOne({_id:"5d7a31418d8e4b0ad3247a41"}).lean().then(returned => {
+    if (!returned) return Promise.reject('Did not find stuff !');
+    returned.en = {...returned.en,
+      urdu_flag: 'inactive',
+      nok_flag: 'inactive',
+      eng_flag: 'active'
+    }
+    console.log(returned);
+    res.status(200).render('documentation.hbs',returned.en);
+  }).catch((e) => {
+    res.status(400).render('error.hbs',{msg: e});
   });
 })
 
