@@ -189,13 +189,20 @@
         }
 
         .sidebar > li {
-          padding: 13px 9px;
+          padding: 8px 9px;
           white-space: nowrap;
           text-align: center;
           justify-content: center;
           margin-right: 5px;
           background: #4F4F4F;
           border-radius: 2px;
+          overflow: unset;
+          width: inherit;
+          text-indent: 0px;
+        }
+
+        .sidebar > li.active {
+          font-weight: normal;
         }
 
         .content > div:nth-child(2) {
@@ -219,6 +226,10 @@
         position: relative;
         transform: translate(-50%);
         z-index: -10;
+      }
+
+      .Subsection {
+        text-indent: 20px;
       }
 
     </style>
@@ -317,9 +328,9 @@
       <ul class="sidebar">
         {{#each Documentation}}
           {{#if this.[0].Section}}
-            <li linked_with="{{@index}}" class=""><a href="#{{@index}}">{{this.[0].Section}}</a></li>
+            <li linked_with="key_{{@index}}" class="{{this.[0].type}}"><a href="#key_{{@index}}">{{this.[0].Section}}</a></li>
           {{else}}
-            <li linked_with="{{@index}}">&nbsp &nbsp <a href="#{{@index}}">{{this.[0].Subsection}}</a> </li>
+            <li linked_with="key_{{@index}}" class="{{this.[0].type}}"><a href="#key_{{@index}}">{{this.[0].Subsection}}</a> </li>
           {{/if}}
         {{/each}}
       </ul>
@@ -329,9 +340,9 @@
         {{#each Documentation}}
 
           {{#if this.[0].Section}}
-            <h3 highlighter="true" id="{{@index}}" class="">{{@index}}. {{this.[0].Section}}</h3>
+            <h3 highlighter="true" id="key_{{@index}}" class="">{{this.[0].Section}}</h3>
           {{else}}
-            <h4 highlighter="true" id="{{@index}}">{{@index}}. {{this.[0].Subsection}}</h4>
+            <h4 highlighter="true" id="key_{{@index}}">{{this.[0].Subsection}}</h4>
           {{/if}}
 
           {{#if this.[1].para}}
@@ -414,6 +425,7 @@
           console.log($(`#${highlt}`).attr('id'));
 
           // Get scroll posn and move the ui avg left
+          return;
           if (window.innerWidth > 768) return;
 
           let moveleft = $(`[linked_with = ${highlt}]`).attr('moveleft');

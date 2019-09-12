@@ -57,7 +57,9 @@ let authenticate = (req,res,next) => {
 };
 
 let convertGoogleData = function(data) {
-  let part = '', poppedItem = '', nobject = {}, iterate = 0;
+  let part = '', poppedItem = '', nobject = {}, iterate = 0, mainCount = 1, subCount = 1;
+
+  // document.write((value + 9).toString(36).toUpperCase());
   let en = data;
   _.each(en,(v,i) => {
 
@@ -70,7 +72,17 @@ let convertGoogleData = function(data) {
       case 'Documentation':
         if (!v[1]) return;
         let sortings = v.map((cV,index,arr) => {
-          if (index == 0) return {[arr[0].replace(/ /g,'')]: arr[1]};
+          if (index == 0 && cV == 'Section') {
+            subCount = 1;
+            return {
+              [arr[0].replace(/ /g,'')]: `${mainCount++}. ${arr[1]}`,
+              type: arr[0].replace(/ /g,'')
+            };
+          }
+          if (index == 0 && cV == 'Subsection') return {
+            [arr[0].replace(/ /g,'')]: `${(9 + subCount++).toString(36)}. ${arr[1]}`,
+            type: arr[0].replace(/ /g,'')
+          };
           if (index == 1) return null;
           if (cV.indexOf('img:') != -1) return {image: cV.split('img:')[1]};
           return {para: cV};
@@ -271,7 +283,7 @@ app.post('/deploy_request', authenticate, async (req,res) => {
 })
 
 app.get('/documentation',(req,res) => {
-  SheetData.findOne({_id:"5d7a31418d8e4b0ad3247a41"}).lean().then(returned => {
+  SheetData.findOne({status: 'live'}).lean().then(returned => {
     if (!returned) return Promise.reject('Did not find stuff !');
     returned.en = {...returned.en,
       urdu_flag: 'inactive',
