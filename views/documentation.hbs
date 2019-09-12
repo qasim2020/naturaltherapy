@@ -12,6 +12,7 @@
         width: 100vw;
         min-height: 100vh;
         margin: 0;
+        margin-bottom: 100vh;
       }
 
       .container {
@@ -330,11 +331,15 @@
           {{#if this.[0].Section}}
             <h3 highlighter="true" id="{{@index}}" class="">{{@index}}. {{this.[0].Section}}</h3>
           {{else}}
-            <h4 highlighter="true" id="{{@index}}">a. {{this.[0].Subsection}}</h4>
+            <h4 highlighter="true" id="{{@index}}">{{@index}}. {{this.[0].Subsection}}</h4>
           {{/if}}
 
           {{#if this.[1].para}}
             <p>{{this.[1].para}}</p>
+          {{/if}}
+
+          {{#if this.[1].image}}
+            <img src="{{this.[1].image}}" alt="">
           {{/if}}
 
           {{#if this.[2].para}}
@@ -347,6 +352,10 @@
 
           {{#if this.[3].para}}
             <p>{{this.[3].para}}</p>
+          {{/if}}
+
+          {{#if this.[3].image}}
+            <img src="{{this.[3].image}}" alt="">
           {{/if}}
 
         {{/each}}
