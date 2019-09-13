@@ -111,13 +111,23 @@ app.get('/publish',(req,res) => {
   }).catch(e => console.log(e));
 })
 
+let getSheetData = function() {
+  if (session.draft) {
+    console.log('opening draft');
+    return SheetData.findById(mongoose.Types.ObjectId(session.draft.sheetId)).lean();
+  } else {
+    console.log('opening real');
+    return SheetData.findOne({status: 'live'}).lean();
+  }
+}
+
 app.get('/',(req,res) => {
 
   if (!session.lang) {
     session.lang = 'en';
   };
 
-  SheetData.findOne({status: 'live'}).lean().then(returned => {
+  getSheetData().then(returned => {
     if (!returned) return Promise.reject('Did not find any "Live" data ! Either update website using admin portal or Contact Developer !');
     if (session.lang == 'en') {
       returned = {...returned.en,
@@ -257,17 +267,16 @@ app.post('/fetch_google_sheet', authenticate, (req,res) => {
 })
 
 app.get('/draft_site', authenticate, (req,res) => {
-
-  SheetData.findById(mongoose.Types.ObjectId(req.query.sheetId)).then(returned => {
-    if (!returned) return Promise.reject('Data not found ! Contact Developer !');
-    res.status(200).render('home.hbs',returned.en);
-  }).catch((e) => {
-    console.log(e);
-    res.status(400).render('error.hbs',e.msg);
-  });
+  session.draft = {
+    sheetId: req.query.sheetId
+  };
+  req.url = `/`;
+  return app._router.handle(req, res);
 })
 
 app.post('/deploy_request', authenticate, async (req,res) => {
+
+  session.draft = false;
 
   SheetData.updateMany({status: 'live'},{$set:{status: 'took_offline'}}).then(oldSheet => {
     return SheetData.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.sheetId)},{$set: {status: 'live'}});
@@ -285,7 +294,7 @@ app.get('/documentation',(req,res) => {
     session.lang = 'en';
   };
 
-  SheetData.findOne({status: 'live'}).lean().then(returned => {
+  getSheetData().then(returned => {
     if (!returned) return Promise.reject('Did not find stuff !');
 
     if (session.lang == 'en') {
