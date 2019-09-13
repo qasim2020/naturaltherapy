@@ -12,7 +12,7 @@
         width: 100vw;
         min-height: 100vh;
         margin: 0;
-        margin-bottom: 100vh;
+        margin-bottom: 75vh;
       }
 
       .container {
@@ -176,14 +176,14 @@
         }
 
         .sidebar {
-          top: 42px;
-          left: 10px;
+          top: 30px;
+          left: 0px;
           overflow: scroll;
-          max-width: 100vw;
+          max-width: 100%;
           background: #333333;
           display: flex;
           align-items: center;
-          padding: 10px 0;
+          padding: 5px;
           margin-left: 0px;
           transition: 0.7s left ease;
         }
@@ -328,11 +328,12 @@
       <ul class="sidebar">
         {{#each Documentation}}
           {{#if this.[0].Section}}
-            <li linked_with="key_{{@index}}" class="{{this.[0].type}}"><a href="#key_{{@index}}">{{this.[0].Section}}</a></li>
+            <li linked_with="key_{{@index}}" class="{{this.[0].type}}"><a true_id="{{this.[0].true_id}}" href="#key_{{@index}}">{{this.[0].Section}}</a></li>
           {{else}}
-            <li linked_with="key_{{@index}}" class="{{this.[0].type}}"><a href="#key_{{@index}}">{{this.[0].Subsection}}</a> </li>
+            <li linked_with="key_{{@index}}" class="{{this.[0].type}}"><a true_id="{{this.[0].true_id}}" href="#key_{{@index}}">{{this.[0].Subsection}}</a> </li>
           {{/if}}
         {{/each}}
+        <div style="padding: 5px"></div>
       </ul>
 
       <div class="main_text">
@@ -340,9 +341,9 @@
         {{#each Documentation}}
 
           {{#if this.[0].Section}}
-            <h3 highlighter="true" id="key_{{@index}}" class="">{{this.[0].Section}}</h3>
+            <h3 highlighter="true" id="key_{{@index}}" class="">{{this.[0].listed}}</h3>
           {{else}}
-            <h4 highlighter="true" id="key_{{@index}}">{{this.[0].Subsection}}</h4>
+            <h4 highlighter="true" id="key_{{@index}}">{{this.[0].listed}}</h4>
           {{/if}}
 
           {{#if this.[1].para}}
@@ -382,10 +383,14 @@
 
       $(document).ready(function() {
 
-        var url = window.location.hash;
+
+        var url = window.location.hash || 'url_#page_intro';
         var hash = url.split('#page_')[1];
         console.log({hash});
-        $(`[href="#${hash}"]`).trigger('click');
+        $('.sidebar').find('li:eq(0)').addClass('active');
+
+        $('#key_0').addClass('active');
+        $(`[true_id="#${hash}"]`).trigger('click');
 
         if (window.innerWidth > 768) return;
 
@@ -396,9 +401,9 @@
           let mywidth = $(val).width();
           let moveleft;
           if (!visibitiy) {
-            moveleft = - (myposnindiv + mywidth - window.innerWidth + 50);
+            moveleft = myposnindiv + mywidth - window.innerWidth + 50;
           } else {
-            moveleft = 10;
+            moveleft = 0;
           }
           $(val).attr({moveleft});
         })
@@ -425,12 +430,13 @@
           console.log($(`#${highlt}`).attr('id'));
 
           // Get scroll posn and move the ui avg left
-          return;
+
           if (window.innerWidth > 768) return;
 
           let moveleft = $(`[linked_with = ${highlt}]`).attr('moveleft');
 
-          $('.sidebar').css({left: `${moveleft}px`});
+          $('.sidebar').scrollLeft(`${moveleft}`);
+          // $('.sidebar').css({left: `${moveleft}px`});
 
       });
 

@@ -60,7 +60,7 @@ let convertGoogleData = function(data) {
   let part = '', poppedItem = '', nobject = {}, iterate = 0, mainCount = 1, subCount = 1;
 
   let en = data;
-  
+
   _.each(en,(v,i) => {
 
     if (!v[0] || i == 0) {
@@ -75,19 +75,22 @@ let convertGoogleData = function(data) {
           if (index == 0 && cV == 'Section') {
             subCount = 1;
             return {
-              [arr[0].replace(/ /g,'')]: `${mainCount++}. ${arr[1]}`,
-              type: arr[0].replace(/ /g,'')
+              [arr[0].replace(/ /g,'')]: arr[2],
+              type: arr[0].replace(/ /g,''),
+              true_id: arr[1],
+              listed: `${mainCount++}. ${arr[2]}`
             };
           }
           if (index == 0 && cV == 'Subsection') return {
-            [arr[0].replace(/ /g,'')]: `${(9 + subCount++).toString(36)}. ${arr[1]}`,
-            type: arr[0].replace(/ /g,'')
+            [arr[0].replace(/ /g,'')]: arr[2],
+            type: arr[0].replace(/ /g,''),
+            true_id: arr[1],
+            listed: `${(9 + subCount++).toString(36)}. ${arr[2]}`
           };
-          if (index == 1) return null;
+          if (index == 2 || index == 1) return null;
           if (cV.indexOf('img:') != -1) return {image: cV.split('img:')[1]};
           return {para: cV};
         }).filter(cV => cV != null);
-        console.log(sortings);
         nobject[part][iterate++] = sortings;
         break;
       default:
