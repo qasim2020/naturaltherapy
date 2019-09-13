@@ -112,49 +112,44 @@ app.get('/publish',(req,res) => {
 })
 
 app.get('/',(req,res) => {
+
+  if (!session.lang) {
+    session.lang = 'en';
+  };
+
   SheetData.findOne({status: 'live'}).lean().then(returned => {
     if (!returned) return Promise.reject('Did not find any "Live" data ! Either update website using admin portal or Contact Developer !');
-    returned.en = {...returned.en,
-      urdu_flag: 'inactive',
-      nok_flag: 'inactive',
-      eng_flag: 'active'
+    if (session.lang == 'en') {
+      returned = {...returned.en,
+        urdu_flag: 'inactive',
+        nok_flag: 'inactive',
+        eng_flag: 'active'
+      }
+    } else if (session.lang == 'ur') {
+      returned = {...returned.ur,
+        urdu_flag: 'active',
+        nok_flag: 'inactive',
+        eng_flag: 'inactive'
+      }
+    } else {
+      returned = {...returned.nok,
+        urdu_flag: 'inactive',
+        nok_flag: 'active',
+        eng_flag: 'inactive'
+      }
     }
 
-    console.log(returned.en);
-    res.status(200).render('home.hbs',returned.en);
+    res.status(200).render('home.hbs',returned);
   }).catch((e) => {
     res.status(400).render('error.hbs',{msg: e});
   });
 })
 
-app.get('/urdu',(req,res) => {
-  SheetData.findOne({status: 'live'}).lean().then(returned => {
-    if (!returned) return Promise.reject('Did not find any "Live" data ! Either update website using admin portal or Contact Developer !');
-    returned.ur = {...returned.ur,
-      urdu_flag: 'active',
-      nok_flag: 'inactive',
-      eng_flag: 'inactive'
-    }
-    res.status(200).render('home.hbs',returned.ur);
-  }).catch((e) => {
-    console.log(e);
-    res.status(400).render('error.hbs',{msg: e});
-  });
-})
+app.get('/change_lang',(req,res) => {
 
-app.get('/nok',(req,res) => {
-  SheetData.findOne({status: 'live'}).lean().then(returned => {
-    if (!returned) return Promise.reject('Did not find any "Live" data ! Either update website using admin portal or Contact Developer !');
-    returned.nok = {...returned.nok,
-      urdu_flag: 'inactive',
-      nok_flag: 'active',
-      eng_flag: 'inactive'
-    }
-    res.status(200).render('home.hbs',returned.nok);
-  }).catch((e) => {
-    console.log(e);
-    res.status(400).render('error.hbs',{msg: e});
-  });
+  session.lang = req.query.lang;
+  req.url = `/${req.query.redirect_url}`;
+  return app._router.handle(req, res);
 })
 
 function create_email(email_data) {
@@ -286,15 +281,34 @@ app.post('/deploy_request', authenticate, async (req,res) => {
 })
 
 app.get('/documentation',(req,res) => {
+  if (!session.lang) {
+    session.lang = 'en';
+  };
+
   SheetData.findOne({status: 'live'}).lean().then(returned => {
     if (!returned) return Promise.reject('Did not find stuff !');
-    returned.en = {...returned.en,
-      urdu_flag: 'inactive',
-      nok_flag: 'inactive',
-      eng_flag: 'active'
-    }
+
+    if (session.lang == 'en') {
+        returned = {...returned.en,
+          urdu_flag: 'inactive',
+          nok_flag: 'inactive',
+          eng_flag: 'active'
+        }
+      } else if (session.lang == 'ur') {
+        returned = {...returned.ur,
+          urdu_flag: 'active',
+          nok_flag: 'inactive',
+          eng_flag: 'inactive'
+        }
+      } else {
+        returned = {...returned.nok,
+          urdu_flag: 'inactive',
+          nok_flag: 'active',
+          eng_flag: 'inactive'
+        }
+      }
     // console.log(returned.en);
-    res.status(200).render('documentation.hbs',returned.en);
+    res.status(200).render('documentation.hbs',returned);
   }).catch((e) => {
     res.status(400).render('error.hbs',{msg: e});
   });
