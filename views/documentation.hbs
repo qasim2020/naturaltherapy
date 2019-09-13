@@ -103,8 +103,13 @@
         width: 204px;
       }
 
+      .sidebar > li:hover {
+        overflow: inherit;
+        color: white;
+      }
+
       .sidebar > li.active {
-        color: #6FCF97;
+        color: #6FCF97 !important;
         font-weight: bold;
       }
 
@@ -122,7 +127,7 @@
         font-style: normal;
         font-weight: bold;
         font-size: 18px;
-        line-height: 21px;
+        line-height: 177.19%;
 
         color: #BDBDBD;
       }
@@ -140,7 +145,7 @@
         font-style: normal;
         font-weight: bold;
         font-size: 18px;
-        line-height: 21px;
+        line-height: 177.19%;
         color: #BDBDBD;
 
         text-indent: 42px;
@@ -159,6 +164,18 @@
         /* Gray 4 */
         color: #9E9E9E;
 
+      }
+
+      .main_text a {
+        border-bottom: 2px solid #6FCF97;
+        background: transparent;
+        transition: background 0.05s linear;
+        transition: color 0.05s linear;
+      }
+
+      .main_text a:hover {
+        background: #6FCF97;
+        color: white;
       }
 
       @media (max-width: 700px) {
@@ -201,12 +218,17 @@
           text-indent: 0px;
         }
 
+        .sidebar > li:hover {
+          overflow: unset;
+          color: white;
+        }
+
         .sidebar > li.active {
           font-weight: normal;
         }
 
         .content > div:nth-child(2) {
-          padding: 129px 10px 0 10px;
+          padding: 88px 10px 0 10px;
         }
       }
 
@@ -347,7 +369,7 @@
           {{/if}}
 
           {{#if this.[1].para}}
-            <p>{{this.[1].para}}</p>
+            <p>{{{this.[1].para}}}</p>
           {{/if}}
 
           {{#if this.[1].image}}
@@ -355,7 +377,7 @@
           {{/if}}
 
           {{#if this.[2].para}}
-            <p>{{this.[2].para}}</p>
+            <p>{{{this.[2].para}}}</p>
           {{/if}}
 
           {{#if this.[2].image}}
@@ -363,7 +385,7 @@
           {{/if}}
 
           {{#if this.[3].para}}
-            <p>{{this.[3].para}}</p>
+            <p>{{{this.[3].para}}}</p>
           {{/if}}
 
           {{#if this.[3].image}}
@@ -380,6 +402,8 @@
     <script type="text/javascript" src="/jquery.pjax.js"></script>
     <script src="/reload/reload.js"></script>
     <script type="text/javascript">
+
+      let info = {};
 
       $(document).ready(function() {
 
@@ -408,8 +432,6 @@
           $(val).attr({moveleft});
         })
 
-
-
       })
 
       $(window).scroll(function () {
@@ -432,6 +454,7 @@
           // Get scroll posn and move the ui avg left
 
           if (window.innerWidth > 768) return;
+          if (info.dontmove) return;
 
           let moveleft = $(`[linked_with = ${highlt}]`).attr('moveleft');
 
@@ -445,11 +468,14 @@
             event.preventDefault();
             var hash = this.hash;
             if (window.innerWidth < 700) {
+              info.dontmove = true;
               $('html, body').animate({
-                scrollTop: $(hash).offset().top - 149
+                scrollTop: $(hash).offset().top - 119
               },{
                 duration: 800,
-                complete: function() {}
+                complete: function() {
+                  info.dontmove = false;
+                }
               });
             } else {
               $('html, body').animate({

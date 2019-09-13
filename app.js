@@ -293,7 +293,7 @@ app.get('/documentation',(req,res) => {
       nok_flag: 'inactive',
       eng_flag: 'active'
     }
-    console.log(returned);
+    // console.log(returned.en);
     res.status(200).render('documentation.hbs',returned.en);
   }).catch((e) => {
     res.status(400).render('error.hbs',{msg: e});
