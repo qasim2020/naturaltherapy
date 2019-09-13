@@ -59,8 +59,8 @@ let authenticate = (req,res,next) => {
 let convertGoogleData = function(data) {
   let part = '', poppedItem = '', nobject = {}, iterate = 0, mainCount = 1, subCount = 1;
 
-  // document.write((value + 9).toString(36).toUpperCase());
   let en = data;
+  
   _.each(en,(v,i) => {
 
     if (!v[0] || i == 0) {
