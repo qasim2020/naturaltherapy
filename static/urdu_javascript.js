@@ -19,12 +19,12 @@
           let myposnindiv = $(val).offset().left;
           // let visibitiy = window.innerWidth > myposnindiv + $(val).width();
           let visibitiy = myposnindiv > 0;
-          let mywidth = $(val).width();
+          let mywidth = $('.sidebar')[0].scrollWidth;
           let moveleft;
           if (!visibitiy) {
-            moveleft = (myposnindiv - 50);
+            moveleft = mywidth + myposnindiv - $(val).width() - 50;
           } else {
-            moveleft = 0;
+            moveleft = mywidth;
           }
           console.log({myposnindiv,visibitiy,mywidth,moveleft});
           $(val).attr({moveleft});
@@ -47,7 +47,7 @@
           $(`#${highlt}`).addClass('active');
           $('[highlighter="true"]').not(`#${highlt}`).removeClass('active');
 
-          console.log($(`#${highlt}`).attr('id'));
+          // console.log($(`#${highlt}`).attr('id'));
 
           // Get scroll posn and move the ui avg left
 
@@ -57,6 +57,7 @@
           let moveleft = $(`[linked_with = ${highlt}]`).attr('moveleft');
 
           $('.sidebar').scrollLeft(`${moveleft}`);
+          console.log({moveleft});
           // $('.sidebar').css({left: `${moveleft}px`});
 
       });
