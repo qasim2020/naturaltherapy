@@ -22,7 +22,7 @@
           let mywidth = $('.sidebar')[0].scrollWidth;
           let moveleft;
           if (!visibitiy) {
-            moveleft = mywidth + myposnindiv - $(val).width() - 50;
+            moveleft = (mywidth + myposnindiv) - $(val).width() - 50;
           } else {
             moveleft = mywidth;
           }
