@@ -15,6 +15,6 @@ var SheetData = mongoose.Schema({
   }
 });
 
-var SheetData = mongoose.model('SheetData',SheetData);
+var SheetData = mongoose.model('SheetData', SheetData);
 
 module.exports = {SheetData};

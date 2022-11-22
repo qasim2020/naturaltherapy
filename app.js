@@ -12,6 +12,7 @@ const _ = require('lodash');
 const Handlebars = require('handlebars');
 const axios = require('axios');
 const fs = require('fs');
+const server = http.createServer(app);
 
 const {serverRunning} = require('./js/serverRunning');
 const {sheet} = require('./server/sheets.js');
@@ -25,6 +26,8 @@ const {Contacted} = require('./models/contacted');
 
 var app = express();
 var port = process.env.PORT || 3000;
+console.log(port);
+
 app.use(pjax());
 app.use(express.static(__dirname+'/static'));
 app.use(bodyParser.json({limit: '50mb'}));
@@ -112,22 +115,25 @@ app.get('/publish',(req,res) => {
 })
 
 let getSheetData = function() {
+  console.log("get sheet data");
   if (session.draft) {
     console.log('opening draft');
     return SheetData.findById(mongoose.Types.ObjectId(session.draft.sheetId)).lean();
   } else {
-    console.log('opening real');
-    return SheetData.findOne({status: 'live'}).lean();
+    console.log('opening real data');
+    return SheetData.findOne({"status": 'live'}).lean();
   }
 }
 
 app.get('/',(req,res) => {
 
+  console.log("opening landing page");
   if (!session.lang) {
     session.lang = 'en';
   };
 
   getSheetData().then(returned => {
+    console.log(returned);
     if (!returned) return Promise.reject('Did not find any "Live" data ! Either update website using admin portal or Contact Developer !');
     if (session.lang == 'en') {
       returned = {...returned.en,
@@ -238,7 +244,7 @@ app.post('/login_request',(req,res) => {
   });
 })
 
-app.get('/admin', authenticate,(req,res) => {
+app.get('/admin', authenticate, (req,res) => {
 
   res.render('admin.hbs',{
     google_link: process.env.google_link,
