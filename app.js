@@ -125,6 +125,33 @@ let getSheetData = function() {
   }
 }
 
+let data = function(session,returned) {
+  let object = {};
+  if (session.lang == 'en') {
+    object = {...returned.en,
+      urdu_flag: 'inactive',
+      nok_flag: 'inactive',
+      eng_flag: 'active',
+      stylesheet: 'english'
+    }
+  } else if (session.lang == 'ur') {
+    object = {...returned.ur,
+      urdu_flag: 'active',
+      nok_flag: 'inactive',
+      eng_flag: 'inactive',
+      stylesheet: 'urdu'
+    }
+  } else {
+    object = {...returned.nok,
+      urdu_flag: 'inactive',
+      nok_flag: 'active',
+      eng_flag: 'inactive',
+      stylesheet: 'english'
+    }
+  }
+  return object;
+}
+
 app.get('/',(req,res) => {
 
   console.log("opening landing page");
@@ -133,27 +160,14 @@ app.get('/',(req,res) => {
   };
 
   getSheetData().then(returned => {
+<<<<<<< HEAD
     console.log(returned);
+=======
+
+>>>>>>> eccbf8e986260714a08e1c5d7086b6bf8ada9e7d
     if (!returned) return Promise.reject('Did not find any "Live" data ! Either update website using admin portal or Contact Developer !');
-    if (session.lang == 'en') {
-      returned = {...returned.en,
-        urdu_flag: 'inactive',
-        nok_flag: 'inactive',
-        eng_flag: 'active'
-      }
-    } else if (session.lang == 'ur') {
-      returned = {...returned.ur,
-        urdu_flag: 'active',
-        nok_flag: 'inactive',
-        eng_flag: 'inactive'
-      }
-    } else {
-      returned = {...returned.nok,
-        urdu_flag: 'inactive',
-        nok_flag: 'active',
-        eng_flag: 'inactive'
-      }
-    }
+
+    returned = data(session,returned);
 
     res.status(200).render('home.hbs',returned);
   }).catch((e) => {
@@ -166,6 +180,7 @@ app.get('/change_lang',(req,res) => {
   session.lang = req.query.lang;
   req.url = `/${req.query.redirect_url}`;
   return app._router.handle(req, res);
+
 })
 
 function create_email(email_data) {
@@ -303,26 +318,8 @@ app.get('/documentation',(req,res) => {
   getSheetData().then(returned => {
     if (!returned) return Promise.reject('Did not find stuff !');
 
-    if (session.lang == 'en') {
-        returned = {...returned.en,
-          urdu_flag: 'inactive',
-          nok_flag: 'inactive',
-          eng_flag: 'active'
-        }
-      } else if (session.lang == 'ur') {
-        returned = {...returned.ur,
-          urdu_flag: 'active',
-          nok_flag: 'inactive',
-          eng_flag: 'inactive'
-        }
-      } else {
-        returned = {...returned.nok,
-          urdu_flag: 'inactive',
-          nok_flag: 'active',
-          eng_flag: 'inactive'
-        }
-      }
-    // console.log(returned.en);
+    returned = data(session,returned);
+    
     res.status(200).render('documentation.hbs',returned);
   }).catch((e) => {
     res.status(400).render('error.hbs',{msg: e});
