@@ -160,11 +160,6 @@ app.get('/',(req,res) => {
   };
 
   getSheetData().then(returned => {
-<<<<<<< HEAD
-    console.log(returned);
-=======
-
->>>>>>> eccbf8e986260714a08e1c5d7086b6bf8ada9e7d
     if (!returned) return Promise.reject('Did not find any "Live" data ! Either update website using admin portal or Contact Developer !');
 
     returned = data(session,returned);
